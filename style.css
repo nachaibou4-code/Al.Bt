@@ -2,101 +2,102 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Permanent+Marker&family=Space+Mono&display=swap');
 
 :root {
-    --bg-color: #0D0D0D;
-    --card-bg: #161616;
-    --neon-pink: #FF007F;
-    --soft-pink: #FFB6C1;
-    --cyber-blue: #00F2FF;
+    --bg-color: #050505;
+    --card-bg: #111111;
+    --accent-color: #ffffff; /* On remplace le rose par du blanc pur */
+    --secondary-accent: #00F2FF; /* Une petite touche cyan pour le côté Cyber */
+    --text-dim: #888888;
 }
 
 body {
     background-color: var(--bg-color);
-    color: #e0e0e0;
+    color: #ffffff;
     font-family: 'Space Mono', monospace;
     margin: 0;
     overflow-x: hidden;
 }
 
-/* Effet de grain Pinterest */
+/* Effet de grain (indispensable pour la DA Grunge) */
 body::before {
     content: "";
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: url('https://grainy-gradients.vercel.app/noise.svg');
-    opacity: 0.2;
+    opacity: 0.12;
     pointer-events: none;
     z-index: 10;
 }
 
 header {
-    height: 60vh;
+    height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-.japanese-tag {
-    color: var(--neon-pink);
-    font-size: 1.2rem;
-    letter-spacing: 5px;
-    display: block;
-    margin-bottom: 10px;
+    border-bottom: 1px solid #222;
 }
 
 h1 {
     font-family: 'Permanent Marker', cursive;
-    font-size: 4rem;
-    color: white;
-    text-shadow: 3px 3px var(--neon-pink), -1px -1px var(--cyber-blue);
+    font-size: 4.5rem;
+    color: var(--accent-color);
+    text-shadow: 2px 2px 0px var(--secondary-accent);
     margin: 0;
+    letter-spacing: -2px;
 }
 
-.subtitle {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.8rem;
-    color: var(--soft-pink);
-    letter-spacing: 3px;
-}
-
-/* Les cartes de contenu style Cyber */
-.cyber-card {
-    background: var(--card-bg);
-    border: 1px solid #333;
-    border-left: 5px solid var(--neon-pink);
-    margin: 20px auto;
-    padding: 30px;
-    max-width: 700px;
-    position: relative;
-    box-shadow: 10px 10px 0px rgba(255, 0, 127, 0.1);
-}
-
-.card-header {
-    font-size: 0.7rem;
-    color: var(--neon-pink);
-    margin-bottom: 20px;
+.japanese-tag {
+    font-family: sans-serif;
+    color: var(--secondary-accent);
+    letter-spacing: 8px;
+    display: block;
+    margin-bottom: 10px;
     font-weight: bold;
 }
 
-h2 {
+/* La carte avec le message "Gros Loser" */
+.cyber-card {
+    background: var(--card-bg);
+    border: 1px solid #333;
+    border-top: 4px solid var(--accent-color);
+    margin: 40px auto;
+    padding: 40px;
+    max-width: 650px;
+    position: relative;
+}
+
+.card-header {
     font-family: 'Orbitron', sans-serif;
-    color: white;
-    font-size: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+h2 {
+    font-family: sans-serif; /* Pour le japonais */
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin: 0;
 }
 
 .translation {
-    font-size: 0.8rem;
-    color: #666;
-    font-style: italic;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-top: 10px;
+    border-left: 2px solid var(--secondary-accent);
+    padding-left: 15px;
 }
 
-/* Déco de coins style interface */
+/* Petits détails techniques */
 .corner-deco {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 20px;
-    height: 20px;
-    border-right: 3px solid var(--neon-pink);
-    border-bottom: 3px solid var(--neon-pink);
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background: var(--accent-color);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%); /* Petit triangle en bas à droite */
 }
