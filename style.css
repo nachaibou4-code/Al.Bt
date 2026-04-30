@@ -1,1 +1,45 @@
+/* RESET : On enlève les marges de base du navigateur */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+body {
+    background-color: #0a0a0a; /* Noir profond */
+    color: #e0e0e0;
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+}
+
+header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #ff0055;
+}
+
+h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 5rem;
+    color: #ff0055;
+    text-shadow: 4px 4px 0px #00f2ff;
+    letter-spacing: -2px;
+}
+
+.subtitle {
+    font-family: 'Orbitron', sans-serif;
+    color: #00f2ff;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.cyber-box {
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #00f2ff;
+    max-width: 800px;
+    background: rgba(0, 242, 255, 0.05); /* Un léger fond bleu transparent */
+}
