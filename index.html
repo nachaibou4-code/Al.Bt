@@ -1,24 +1,36 @@
 <body>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;700&family=Syncopate:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- L'effet de grain/bruit est géré en CSS -->
-    <div class="grain"></div>
-
-    <header>
-        <div class="title-container">
-            <span class="japanese-tag">大好きだよ、負け犬くん。</span> 
-            <h1 class="glitch">AL.BT // SYSTEM</h1>
-            <p class="subtitle">PROJECT_01 // FOR_MY_FAVORITE_HUMAN</p>
+    <div class="main-grid">
+    <!-- BARRE LATERALE -->
+    <aside class="sidebar">
+        <div style="font-weight: bold; font-size: 1.2rem;">AL.BT_SYS</div>
+        <nav>
+            <a href="#home" class="nav-item active">01_ACCUEIL</a>
+            <a href="#logs" class="nav-item">02_ARCHIVES</a>
+            <a href="#gallery" class="nav-item">03_GALERIE</a>
+            <a href="#message" class="nav-item">04_TERMINAL</a>
+        </nav>
+        <div style="margin-top: auto; font-size: 0.5rem; color: #444;">
+            CONNECTED_FROM: IP_ENCRYPTED
         </div>
-    </header>
+    </aside>
 
-    <main>
-        <section class="cyber-card">
-            <div class="card-header">
-                <span class="dot"></span> STATUS: CONNECTED
+    <!-- CONTENU PRINCIPAL -->
+    <section class="content">
+        <div class="status-bar">
+            <span>VERSION 2.0.26</span>
+            <span>DATE: 30.04.2026</span>
+            <span>USER: GROS_LOOSER</span>
+        </div>
+
+        <div id="home">
+            <h1>SYSTEM<br>OVERRIDE</h1>
+            <div class="big-text-box">
+                <p>愛してる、負け犬。</p>
+                <p style="font-size: 0.8rem; color: #888;">> JE T'AIME, GROS LOSER. ACCÈS TOTAL ACCORDÉ AU RESTE DES DONNÉES.</p>
             </div>
-            <h2>秘密の場所 <span class="translation">(Notre endroit secret et c'est pas ma chatte pour une fois)</span></h2>
-            <p>Bienvenue dans cet espace codé juste pour toi. Ici, le temps s'arrête ou du moins le mien non mais ainsi va la vie.</p>
-            <div class="corner-deco"></div>
-        </section>
-    </main>
-</body>
+        </div>
+    </section>
+</div>
