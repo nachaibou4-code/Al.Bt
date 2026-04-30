@@ -1,45 +1,102 @@
-/* RESET : On enlève les marges de base du navigateur */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Import des polices */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Permanent+Marker&family=Space+Mono&display=swap');
+
+:root {
+    --bg-color: #0D0D0D;
+    --card-bg: #161616;
+    --neon-pink: #FF007F;
+    --soft-pink: #FFB6C1;
+    --cyber-blue: #00F2FF;
 }
 
 body {
-    background-color: #0a0a0a; /* Noir profond */
+    background-color: var(--bg-color);
     color: #e0e0e0;
     font-family: 'Space Mono', monospace;
+    margin: 0;
     overflow-x: hidden;
 }
 
+/* Effet de grain Pinterest */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 10;
+}
+
 header {
-    height: 100vh;
+    height: 60vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-bottom: 2px solid #ff0055;
+    text-align: center;
+}
+
+.japanese-tag {
+    color: var(--neon-pink);
+    font-size: 1.2rem;
+    letter-spacing: 5px;
+    display: block;
+    margin-bottom: 10px;
 }
 
 h1 {
     font-family: 'Permanent Marker', cursive;
-    font-size: 5rem;
-    color: #ff0055;
-    text-shadow: 4px 4px 0px #00f2ff;
-    letter-spacing: -2px;
+    font-size: 4rem;
+    color: white;
+    text-shadow: 3px 3px var(--neon-pink), -1px -1px var(--cyber-blue);
+    margin: 0;
 }
 
 .subtitle {
     font-family: 'Orbitron', sans-serif;
-    color: #00f2ff;
-    text-transform: uppercase;
-    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--soft-pink);
+    letter-spacing: 3px;
 }
 
-.cyber-box {
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #00f2ff;
-    max-width: 800px;
-    background: rgba(0, 242, 255, 0.05); /* Un léger fond bleu transparent */
+/* Les cartes de contenu style Cyber */
+.cyber-card {
+    background: var(--card-bg);
+    border: 1px solid #333;
+    border-left: 5px solid var(--neon-pink);
+    margin: 20px auto;
+    padding: 30px;
+    max-width: 700px;
+    position: relative;
+    box-shadow: 10px 10px 0px rgba(255, 0, 127, 0.1);
+}
+
+.card-header {
+    font-size: 0.7rem;
+    color: var(--neon-pink);
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.translation {
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Déco de coins style interface */
+.corner-deco {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    border-right: 3px solid var(--neon-pink);
+    border-bottom: 3px solid var(--neon-pink);
 }
