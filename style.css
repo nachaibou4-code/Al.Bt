@@ -28,7 +28,62 @@ body::after {
     pointer-events: none;
     z-index: -1;
 }
+/* CONTAINER DU TERMINAL TYPE FALLOUT */
+.terminal-message-box {
+    background: #020a02; /* Vert très sombre */
+    border: 2px solid #00ff66; /* Vert phosphoreux */
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+    position: relative;
+    overflow: hidden;
+}
 
+/* L'ÉCRAN OÙ S'AFFICHENT LES MOTS */
+#random-message {
+    font-family: 'JetBrains Mono', monospace;
+    color: #00ff66; /* Couleur vert terminal */
+    text-shadow: 0 0 4px rgba(0, 255, 102, 0.6);
+    min-height: 80px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    white-space: pre-line; /* Garde les retours à la ligne */
+}
+
+/* LE BOUTON TACTIQUE STYLÉ */
+#generate-btn {
+    background: transparent;
+    border: 1px solid #00ff66;
+    color: #00ff66;
+    font-family: 'Syncopate', sans-serif;
+    font-size: 0.75rem;
+    padding: 12px 24px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    display: inline-block;
+    letter-spacing: 2px;
+}
+
+/* Effet de survol sur le bouton (Inversion des couleurs type Fallout) */
+#generate-btn:hover {
+    background: #00ff66;
+    color: #020a02;
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+    font-weight: bold;
+}
+
+/* Effet de scanline interne exclusif à l'écran Fallout */
+.terminal-message-box::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
 /* Container principal */
 .main-grid {
     display: grid;
