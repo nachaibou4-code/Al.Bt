@@ -35,59 +35,32 @@
                 <div class="big-text-box">
                     <p>愛してる、負け犬。</p>
                     <p style="font-size: 0.8rem; color: #888;">> JE T'AIME, GROS LOSER. ACCÈS TOTAL ACCORDÉ AU RESTE DES DONNÉES.</p>
-                    <p>> JoYeuXx AnnivErSaiRe A ToI mON aM%OuR.</p>
-                    <p>> uNE pArtie de ton cadeau du coup c'est un petit sI$te avec pleins de souvenirs et de choses qui me font penser a toi</p>
-                    <p>> eT Qui foNt quEe je pens%e a toi souvent et très fOrt.</p>
-                    <p>> Pour commencer : 70 petits mots d'amour (parfois un peu de haine on est pas gay frr ).</p>
-                </div> <div class="terminal-message-box" style="margin-top: 30px;">
-                    <div id="random-message" style="border: 1px dashed #444; padding: 15px; margin-bottom: 15px; color: #00F2FF;">
-                        > EN ATTENTE DE COMMANDE...
-                    </div>
+                    <p style="text-transform: none;">> JoYeuXx AnnivErSaiRe A ToI mON aM%OuR.</p>
+                    <p style="text-transform: none;">> uNE pArtie de ton cadeau du coup c'est un petit sI$te avec pleins de souvenirs et de choses qui me font penser a toi</p>
+                    <p style="text-transform: none;">> eT Qui foNt quEe je pens%e a toi souvent et très fOrt.</p>
+                    <p style="text-transform: none;">> Pour commencer : 70 petits mots d'amour (parfois un peu de haine on est pas gay frr ).</p>
+                </div> 
+                
+                <div class="terminal-message-box">
+                    <div id="random-message">> EN ATTENTE DE COMMANDE...</div>
                     <button id="generate-btn">[ GENERATE_NEW_LOG ]</button>
                 </div>
-                <script>
-    // Liste des phrases (envoie-moi les tiennes, je les ajouterai ici !)
-    const lovePhrases = [
-        "> INITIALISATION... \n[LOG]: Joyeux anniversaire Alexandre. Je t'aime, même si t'es un gros naze de compét'.",
-        "> ALERTE CRITIQUE: Surcharge d'affection détectée dans le système core.",
-        "> PROTOCOLE_04: Arrête de faire le mec solide, je sais que tu souris derrière ton écran.",
-        "> LOG_77: Quelque part dans la base de données, y'a mon cœur qui tourne en boucle sur ton ID.",
-        "> ERROR_404: Impossible de trouver un défaut majeur chez toi (sauf quand tu joues mal)."
-    ];
-
-    const messageElement = document.getElementById('random-message');
-    const buttonElement = document.getElementById('generate-btn');
-    let isTyping = false;
-
-    function typeWriter(text, index = 0) {
-        if (index < text.length) {
-            isTyping = true;
-            buttonElement.style.opacity = "0.5"; // Désactive visuellement le bouton pendant l'écriture
-            messageElement.innerHTML += text.charAt(index);
-            setTimeout(() => typeWriter(text, index + 1), 30); // Vitesse d'écriture (30ms par lettre)
-        } else {
-            isTyping = false;
-            buttonElement.style.opacity = "1";
-        }
-    }
-
-    buttonElement.addEventListener('click', () => {
-        if (isTyping) return; // Empêche de spammer pendant que ça écrit
-        
-        messageElement.innerHTML = ""; // Vide l'écran
-        
-        // Sélectionne une phrase au hasard
-        const randomIndex = Math.floor(Math.random() * lovePhrases.length);
-        const selectedPhrase = lovePhrases[randomIndex];
-        
-        // Lance l'effet d'écriture
-        typeWriter(selectedPhrase);
-    });
-</script>
             </div>
 
-            </section>
-    </div>
+            <div id="logs" class="page-content">
+                <h1>ARCHIVES_</h1>
+                <div class="big-text-box">
+                    <p>> [LOG_DATA_01]: Zone de texte pour tes souvenirs...</p>
+                </div>
+            </div>
 
-</body>
-</html>
+            <div id="gallery" class="page-content">
+                <h1>MEDIA_DB_</h1>
+                <div class="big-text-box">
+                    <p>> [MEDIA_ERR]: Aucune image importée pour le moment.</p>
+                </div>
+            </div>
+
+            <div id="message" class="page-content">
+                <h1>SYS_STATUS_</h1>
+                <div class="big-text-
