@@ -27,6 +27,11 @@
             overflow-x: hidden;
         }
 
+        /* Cache le lien texte généré par le script Neko pour pas gâcher la DA */
+        #nl {
+            display: none !important;
+        }
+
         /* Grille technique en fond */
         body::after {
             content: "";
@@ -40,14 +45,14 @@
             z-index: -1;
         }
 
-        /* ================= STRUCTURE EN GRILLE (DÉCOLLÉE DES BORDS) ================= */
+        /* ================= STRUCTURE EN GRILLE ================= */
         .main-grid {
             display: grid;
             grid-template-columns: 300px 1fr;
             min-height: 100vh;
             box-sizing: border-box;
-            padding: 30px; /* Décolle toute l'interface des bords de l'écran */
-            gap: 40px; /* Espace entre le menu et le contenu */
+            padding: 30px;
+            gap: 40px;
         }
 
         /* Barre latérale gauche (Sidebar) */
@@ -65,14 +70,14 @@
         .sidebar nav {
             display: flex;
             flex-direction: column;
-            gap: 16px; /* Espace entre tes boutons de menu */
+            gap: 16px;
             margin-top: 50px;
         }
 
-        /* ================= BOUTONS DU MENU STYLE FALLOUT ================= */
+        /* Boutons du menu style Fallout */
         .nav-item {
             background: transparent;
-            border: 1px solid #333; /* Bordure discrète de base */
+            border: 1px solid #333;
             color: var(--dim-text);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.8rem;
@@ -85,7 +90,6 @@
             box-sizing: border-box;
         }
 
-        /* Effet au survol et quand l'onglet est actif -> Style [ GENERATE_NEW_LOG ] */
         .nav-item:hover, .nav-item.active {
             background: transparent !important;
             border: 1px solid var(--accent) !important;
@@ -102,7 +106,6 @@
             padding-top: 10px;
         }
 
-        /* Barre de statut supérieure */
         .status-bar {
             display: flex;
             justify-content: space-between;
@@ -134,7 +137,6 @@
             line-height: 1.6;
         }
 
-        /* Onglets */
         .page-content {
             display: none;
         }
@@ -169,7 +171,7 @@
             margin-bottom: 25px;
             white-space: pre-line;
             font-size: 0.9rem;
-            text-transform: none; /* Vos phrases restent normales */
+            text-transform: none;
         }
 
         #generate-btn {
@@ -205,6 +207,9 @@
     </style>
 </head>
 <body>
+    <script>NekoType="ace"</script>
+    <h1 id="nl"><script src="https://webneko.net/n20171213.js"></script><a href="https://webneko.net">Neko</a></h1>
+
     <div class="main-grid">
         <aside class="sidebar">
             <div style="font-weight: bold; font-size: 1.2rem; letter-spacing: 2px;">AL.BT_SYS</div>
@@ -267,6 +272,6 @@
         </section>
     </div>
 
-    <script src="script.js?v=2.0"></script>
+    <script src="script.js?v=2.1"></script>
 </body>
 </html>
