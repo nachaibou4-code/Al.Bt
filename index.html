@@ -204,6 +204,11 @@
             background-size: 100% 3px, 4px 100%;
             pointer-events: none;
         }
+        /* Force le petit chat Ace à s'afficher par-dessus tout le reste */
+        #neko, .neko, img[src*="webneko"] {
+            z-index: 999999 !important;
+            position: fixed !important;
+        }
     </style>
 </head>
 <body>
