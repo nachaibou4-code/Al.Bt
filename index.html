@@ -6,7 +6,7 @@
     <title>AL.BT_SYS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2 family=Bebas+Neue&family=JetBrains+Mono:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -200,27 +200,29 @@
             pointer-events: none;
         }
 
-        /* ================= CONFIGURATION POUR CASER TON FICHIER ACE.HTML ================= */
-        #neko-container {
+        /* ================= ZONE EN PLEIN ÉCRAN POUR LAISSÉ COURIR ACE SANS BRIDER L'IFRAME ================= */
+        #neko-screen {
             position: fixed;
-            width: 48px;  /* Taille idéale pour qu'il ne soit pas trop minuscule */
-            height: 48px;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             z-index: 999999;
-            pointer-events: none; /* Laisse passer les clics sur les boutons du dessous */
+            pointer-events: none; /* Laisse passer les clics sur tes menus et boutons */
             display: block;
         }
 
-        #neko-container iframe {
+        #neko-screen iframe {
             width: 100%;
             height: 100%;
             border: none;
-            overflow: hidden;
+            background: transparent;
         }
     </style>
 </head>
 <body>
 
-    <div id="neko-container">
+    <div id="neko-screen">
         <iframe src="ace.html" scrolling="no"></iframe>
     </div>
 
@@ -285,38 +287,6 @@
 
         </section>
     </div>
-
-    <script>
-        const nekoContainer = document.getElementById('neko-container');
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let nekoX = window.innerWidth / 2;
-        let nekoY = window.innerHeight / 2;
-        
-        // Configuration de la vitesse (0.15 = Ultra réactif et nerveux)
-        const speed = 0.15; 
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateNeko() {
-            // Centre le container de 48px sur la pointe de la souris (48 / 2 = 24)
-            const distX = mouseX - nekoX - 24;
-            const distY = mouseY - nekoY - 24;
-            
-            nekoX += distX * speed;
-            nekoY += distY * speed;
-            
-            nekoContainer.style.left = nekoX + 'px';
-            nekoContainer.style.top = nekoY + 'px';
-            
-            requestAnimationFrame(animateNeko);
-        }
-        
-        animateNeko();
-    </script>
 
     <script src="script.js?v=2.4"></script>
 </body>
