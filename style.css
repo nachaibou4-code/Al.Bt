@@ -43,7 +43,7 @@ body::after {
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    background-color: rgba(8, 8, 8, 0.5);
+    background-color: rgba(4, 4, 4, 0.85); /* Un peu plus sombre pour faire ressortir le vert */
     height: 100vh;
     position: sticky;
     top: 0;
@@ -69,20 +69,24 @@ body::after {
 .menu-item {
     font-size: 0.75rem;
     padding: 12px 15px;
-    border: 1px solid #222;
+    border: 1px solid var(--line);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease-in-out;
     text-decoration: none;
     color: var(--dim-text);
     letter-spacing: 1px;
+    background: rgba(0, 0, 0, 0.4);
 }
 
-/* Remplace cette partie dans ton style.css */
+/* EFFET INVERSION TACTIQUE FALLOUT (Hover et Actif) */
 .menu-item:hover, .menu-item.active {
-    background: var(--terminal-green) !important; /* Devient vert fluo */
-    color: black !important;                      /* Texte écrit en noir dedans */
-    border-color: var(--terminal-green);          /* Bordure verte fluo */
-    box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);  /* Petit effet néon brillant */
+    background: var(--terminal-green) !important;
+    color: #010601 !important; /* Vert foncé/Noir pour un contraste parfait */
+    border-color: var(--terminal-green) !important;
+    font-weight: bold;
+    /* Lueur néon extérieure + Ombre pressée à l'intérieur pour le look matériel */
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.45), inset 0 0 8px rgba(0, 0, 0, 0.6);
+    text-shadow: none;
 }
 
 .system-footer-info {
