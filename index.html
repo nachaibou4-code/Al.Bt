@@ -256,6 +256,66 @@
                 <h1>ARCHIVES_</h1>
                 <div class="big-text-box">
                     <p>> [LOG_DATA_01]: Zone de texte pour tes souvenirs...</p>
+                    <!-- (c) Layout created by Valentine (https://layouts.spacehey.com/layout?id=29048) -->
+
+<style>
+/* replace with cd image that has transparent background. must be 150px by 150px. */
+:root {
+--cd-image: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png');
+}
+.profile-pic {
+position: relative;
+width: 183px;
+filter: drop-shadow(0 0 0.25rem gray);
+}
+.profile-pic:after {
+content: "";
+background: url('https://fluorescent-lights.neocities.org/f0rzNHe.png'), linear-gradient(150deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2), 40%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.6));
+background-size: contain, cover;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+
+.profile-pic:before {
+content: "";
+background: var(--cd-image);
+position: absolute;
+top: 5px;
+left: -20px;
+width: 150px;
+height: 150px;
+background-repeat: no-repeat;
+z-index: -1;
+animation-name: spin;
+animation-duration: 5000ms;
+animation-iteration-count: infinite;
+animation-timing-function: linear; 
+transition: left ease 0.5s;
+}
+.profile-pic:hover:before {
+left: -75px;
+}
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+.profile-pic .pfp-fallback {
+float: right;
+width: 163px;
+height: 160px;
+border: none;
+}
+.general-about .profile-pic img {
+max-width: inherit;
+}
+</style>
                 </div>
             </div>
 
