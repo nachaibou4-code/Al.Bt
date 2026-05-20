@@ -3,6 +3,7 @@
     --line: #222;
     --accent: #ffffff;
     --dim-text: #666;
+    --terminal-green: #00ff66; /* Vert pour les composants mécaniques */
 }
 
 body {
@@ -132,7 +133,7 @@ h1 {
 /* ================= TERMINAL DE LOGS TYPE FALLOUT ================= */
 .terminal-message-box {
     background: #010601;
-    border: 1.5px solid #00ff66;
+    border: 1.5px solid var(--terminal-green);
     padding: 25px;
     box-shadow: 0 0 20px rgba(0, 255, 102, 0.15);
     position: relative;
@@ -142,20 +143,20 @@ h1 {
 
 #random-message {
     font-family: 'JetBrains Mono', monospace;
-    color: #00ff66;
+    color: var(--terminal-green);
     text-shadow: 0 0 4px rgba(0, 255, 102, 0.5);
     min-height: 90px;
     line-height: 1.6;
     margin-bottom: 25px;
     white-space: pre-line;
     font-size: 0.9rem;
-    text-transform: none; /* Laisse tes phrases s'écrire normalement */
+    text-transform: none;
 }
 
 #generate-btn {
     background: transparent;
-    border: 1px solid #00ff66;
-    color: #00ff66;
+    border: 1px solid var(--terminal-green);
+    color: var(--terminal-green);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
     padding: 10px 20px;
@@ -166,7 +167,7 @@ h1 {
 }
 
 #generate-btn:hover {
-    background: #00ff66;
+    background: var(--terminal-green);
     color: #010601;
     box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
 }
@@ -184,89 +185,91 @@ h1 {
     pointer-events: none;
 }
 
-/* ================= APPAREIL AUDIO RETRO ARCHIVES ================= */
+/* ================= PLATINE AUDIO RETRO & MODULE CD ================= */
 .audio-system-container {
     display: flex;
+    flex-direction: row; /* Force l'alignement côte à côte horizontalement */
     align-items: center;
-    justify-content: center;
-    gap: 40px;
+    justify-content: flex-start;
+    gap: 35px; /* Écartement propre entre le boîtier et la tracklist */
     margin-top: 25px;
     background: #0d130e; /* Fond vert cockpit / militaire */
-    border: 2px solid #00ff66; /* Forcé en vert Fallout pour la machine */
-    padding: 30px;
+    border: 2px solid var(--terminal-green);
+    padding: 35px 25px;
     box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.2), 0 10px 30px rgba(0,0,0,0.7);
     border-radius: 8px;
     position: relative;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Sécurité responsive */
+    box-sizing: border-box;
+    width: 100%;
 }
 
-/* Petits détails de terminal au-dessus de la platine */
+/* Détails esthétiques de terminal au-dessus de la platine */
 .audio-system-container::before {
-    content: "• ON • OFF      [ VU_METER: ACTIVE ]      MODE: VAULT_RADIO";
+    content: "• DECK_A: ACTIVE // SYSTEM_STREAM_ONLINE";
     position: absolute;
     top: 8px;
     left: 15px;
     font-size: 0.6rem;
-    color: rgba(0, 255, 102, 0.5);
-    letter-spacing: 2px;
+    color: rgba(0, 255, 102, 0.6);
+    letter-spacing: 1px;
 }
 
-/* Structure de la platine pour caler le boîtier et le disque */
+/* Conteneur matériel pour maintenir ensemble le CD et la Pochette */
 .cd-player-hardware {
     position: relative;
-    width: 200px;
-    height: 200px;
-    flex-shrink: 0;
-    perspective: 1000px; /* Permet l'effet d'ouverture 3D */
+    width: 180px; /* Largeur fixe pour stabiliser le boîtier */
+    height: 180px;
+    flex-shrink: 0; /* Empêche le widget Spotify d'écraser la platine */
+    perspective: 1000px; /* Donne l'effet de profondeur 3D */
 }
 
-/* La pochette physique (Ton illustration Gorillaz) */
+/* La pochette physique (Ton illustration Gorillaz stockée sur GitHub) */
 .profile-pic {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
     box-sizing: border-box;
-    z-index: 3;
+    z-index: 5; /* Reste devant le CD par défaut */
     cursor: pointer;
     
-    /* Charge ton image sur GitHub */
-    background: url('IA_NES_ET_ALEX.png'), #111;
+    background: url('IA_NES_ET_ALEX.png') no-repeat center;
     background-size: cover;
-    background-position: center;
     
-    /* Effet boîtier de CD en plastique transparent */
-    border: 4px solid rgba(255, 255, 255, 0.1);
-    border-left: 8px solid rgba(255, 255, 255, 0.2); /* Tranche du boîtier */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 0 10px rgba(255,255,255,0.1);
+    /* Effet plastique translucide de boîtier de CD */
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-left: 6px solid rgba(255, 255, 255, 0.2); /* Tranche du boîtier */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
     border-radius: 4px;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Effet d'ouverture du boîtier au survol */
+/* Animation 3D : Le boîtier pivote légèrement au survol */
 .cd-player-hardware:hover .profile-pic {
-    transform: rotateY(-15deg);
+    transform: rotateY(-20deg) scale(1.02);
 }
 
-/* LE DISQUE TRANSPARENT (Caché au départ, il tourne) */
+/* LE DISQUE TRANSPARENT (Parfaitement centré en attendant l'action) */
 .cd-player-hardware::before {
     content: "";
-    background: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png');
+    background: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png') no-repeat center;
     background-size: contain;
     position: absolute;
-    top: 15px; left: 10px;
-    width: 170px; height: 170px;
-    background-repeat: no-repeat;
-    z-index: 1;
+    top: 15px; 
+    left: 5px; /* Reste caché sagement derrière la pochette */
+    width: 150px; 
+    height: 150px;
+    z-index: 2; /* Positionné derrière le boîtier */
     
     animation: spinCD 4s infinite linear;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: left 0.4s ease-out;
 }
 
-/* QUAND ON PASSE LA SOURIS : Le CD s'éjecte sur la platine à droite */
+/* EFFET MÉCANIQUE : Le CD sort et glisse vers la droite au survol */
 .cd-player-hardware:hover::before {
-    left: 110px; /* Glisse proprement à côté */
-    z-index: 4;  /* Passe au-dessus pour choper les reflets */
-    filter: drop-shadow(0 5px 15px rgba(0, 255, 102, 0.3));
+    left: 100px; /* Se déploie sur la platine entre le boîtier et Spotify */
+    z-index: 6;   /* Passe devant pour laisser apparaître ses reflets nacrés */
+    filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.4));
 }
 
 @keyframes spinCD {
@@ -274,13 +277,15 @@ h1 {
     to { transform: rotate(360deg); }
 }
 
-/* Boîtier sombre pour habiller le widget Spotify */
+/* Boîtier d'intégration pour caler proprement Spotify */
 .spotify-wrapper {
-    flex-grow: 1;
+    flex-grow: 1; /* Remplit tout l'espace restant à droite du CD */
     min-width: 280px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(0, 255, 102, 0.3);
+    background: rgba(4, 6, 4, 0.8);
+    border: 1px solid rgba(0, 255, 102, 0.25);
     padding: 15px;
     border-radius: 6px;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+    box-sizing: border-box;
+    z-index: 10;
 }

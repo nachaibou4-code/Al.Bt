@@ -12,9 +12,9 @@
         :root {
             --bg: #080808;
             --line: #222;
-            --accent: #00ff66; /* Vert Fallout */
+            --accent: #ffffff;
             --dim-text: #666;
-            --cd-image: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png');
+            --terminal-green: #00ff66; /* Vert signature de la machine */
         }
 
         body {
@@ -68,7 +68,7 @@
         .terminal-gate {
             width: 90%;
             max-width: 600px;
-            border: 2px solid var(--accent);
+            border: 2px solid var(--terminal-green);
             padding: 30px;
             box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);
             background: #020a02;
@@ -76,7 +76,7 @@
         }
 
         .terminal-gate h2 {
-            color: var(--accent);
+            color: var(--terminal-green);
             font-family: 'Syncopate', sans-serif;
             font-size: 1.2rem;
             margin-top: 0;
@@ -85,7 +85,7 @@
         }
 
         .terminal-gate p {
-            color: var(--accent);
+            color: var(--terminal-green);
             font-size: 0.85rem;
             line-height: 1.6;
             margin: 10px 0;
@@ -99,15 +99,15 @@
         }
 
         .terminal-prompt {
-            color: var(--accent);
+            color: var(--terminal-green);
             font-weight: bold;
         }
 
         .terminal-input {
             background: transparent;
             border: none;
-            border-bottom: 2px solid var(--accent);
-            color: var(--accent);
+            border-bottom: 2px solid var(--terminal-green);
+            color: var(--terminal-green);
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.1rem;
             outline: none;
@@ -118,8 +118,8 @@
 
         .terminal-btn {
             background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--terminal-green);
+            color: var(--terminal-green);
             font-family: 'JetBrains Mono', monospace;
             padding: 8px 15px;
             cursor: pointer;
@@ -127,14 +127,14 @@
         }
 
         .terminal-btn:hover {
-            background: var(--accent);
+            background: var(--terminal-green);
             color: #010601;
             box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
         }
 
         .loading-bar-container {
             width: 100%;
-            border: 1px solid var(--accent);
+            border: 1px solid var(--terminal-green);
             height: 20px;
             margin-top: 20px;
             display: none;
@@ -144,7 +144,7 @@
 
         .loading-bar-progress {
             height: 100%;
-            background-color: var(--accent);
+            background-color: var(--terminal-green);
             width: 0%;
             transition: width 0.1s linear;
             box-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
@@ -158,9 +158,9 @@
             text-shadow: 0 0 4px rgba(255, 0, 0, 0.4);
         }
 
-        /* ================= LE CHANGEMENT ICI : LE SITE EST CACHÉ AU DÉBUT ================= */
+        /* ================= LA GRILLE PRINCIPALE (SIDEBAR + CONTENU) ================= */
         .main-grid {
-            display: none; /* Caché au démarrage tant que l'accès est refusé */
+            display: none; /* Caché au démarrage tant que l'accès n'est pas validé */
             grid-template-columns: 300px 1fr;
             min-height: 100vh;
             box-sizing: border-box;
@@ -204,8 +204,8 @@
 
         .nav-item:hover, .nav-item.active {
             background: transparent !important;
-            border: 1px solid var(--accent) !important;
-            color: var(--accent) !important;
+            border: 1px solid var(--terminal-green) !important;
+            color: var(--terminal-green) !important;
             box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
             font-weight: bold;
         }
@@ -266,7 +266,7 @@
         /* ================= TERMINAL DE LOGS ================= */
         .terminal-message-box {
             background: #010601;
-            border: 1.5px solid var(--accent);
+            border: 1.5px solid var(--terminal-green);
             padding: 25px;
             box-shadow: 0 0 20px rgba(0, 255, 102, 0.15);
             position: relative;
@@ -276,7 +276,7 @@
 
         #random-message {
             font-family: 'JetBrains Mono', monospace;
-            color: var(--accent);
+            color: var(--terminal-green);
             text-shadow: 0 0 4px rgba(0, 255, 102, 0.5);
             min-height: 90px;
             line-height: 1.6;
@@ -288,8 +288,8 @@
 
         #generate-btn {
             background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--terminal-green);
+            color: var(--terminal-green);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             padding: 12px 22px;
@@ -300,7 +300,7 @@
         }
 
         #generate-btn:hover {
-            background: var(--accent);
+            background: var(--terminal-green);
             color: #010601;
             box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
         }
@@ -317,44 +317,96 @@
             pointer-events: none;
         }
 
-        /* ================= STYLE DU CD ================= */
-        .profile-pic {
+        /* ================= PLATINE AUDIO RETRO & MODULE CD ================= */
+        .audio-system-container {
+            display: flex;
+            flex-direction: row; /* Aligne le CD et Spotify côte à côte */
+            align-items: center;
+            justify-content: flex-start;
+            gap: 35px;
+            margin-top: 25px;
+            background: #0d130e; /* Couleur cockpit */
+            border: 2px solid var(--terminal-green);
+            padding: 35px 25px;
+            box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.2), 0 10px 30px rgba(0,0,0,0.7);
+            border-radius: 8px;
             position: relative;
-            width: 183px;
-            filter: drop-shadow(0 0 0.25rem gray);
+            flex-wrap: wrap;
+            box-sizing: border-box;
+            width: 100%;
         }
-        .profile-pic:after {
-            content: "";
-            background: url('https://fluorescent-lights.neocities.org/f0rzNHe.png'), linear-gradient(150deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2), 40%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.6));
-            background-size: contain, cover;
+
+        .audio-system-container::before {
+            content: "• DECK_A: ACTIVE // SYSTEM_STREAM_ONLINE";
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 8px;
+            left: 15px;
+            font-size: 0.6rem;
+            color: rgba(0, 255, 102, 0.6);
+            letter-spacing: 1px;
         }
-        .profile-pic:before {
-            content: "";
-            background: var(--cd-image);
+
+        .cd-player-hardware {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            flex-shrink: 0;
+            perspective: 1000px;
+        }
+
+        .profile-pic {
             position: absolute;
-            top: 5px; left: -20px; width: 150px; height: 150px;
-            background-repeat: no-repeat;
-            z-index: -1;
-            animation-name: spin;
-            animation-duration: 5000ms;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear; 
-            transition: left ease 0.5s;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            box-sizing: border-box;
+            z-index: 5;
+            cursor: pointer;
+            background: url('IA_NES_ET_ALEX.png') no-repeat center;
+            background-size: cover;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-left: 6px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
+            border-radius: 4px;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .profile-pic:hover:before {
-            left: -75px;
+
+        .cd-player-hardware:hover .profile-pic {
+            transform: rotateY(-20deg) scale(1.02);
         }
-        @keyframes spin {
-            from { transform:rotate(0deg); }
-            to { transform:rotate(360deg); }
+
+        .cd-player-hardware::before {
+            content: "";
+            background: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png') no-repeat center;
+            background-size: contain;
+            position: absolute;
+            top: 15px; left: 5px;
+            width: 150px; height: 150px;
+            z-index: 2;
+            animation: spinCD 4s infinite linear;
+            transition: left 0.4s ease-out;
         }
-        .profile-pic .pfp-fallback {
-            float: right; width: 163px; height: 160px; border: none;
+
+        .cd-player-hardware:hover::before {
+            left: 100px;
+            z-index: 6;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.4));
         }
-        .general-about .profile-pic img {
-            max-width: inherit;
+
+        @keyframes spinCD {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .spotify-wrapper {
+            flex-grow: 1;
+            min-width: 280px;
+            background: rgba(4, 6, 4, 0.8);
+            border: 1px solid rgba(0, 255, 102, 0.25);
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+            box-sizing: border-box;
+            z-index: 10;
         }
     </style>
 </head>
@@ -431,31 +483,31 @@
                 </div>
             </div>
 
-       <div id="logs" class="page-content">
-    <h1>SPOT.IF.Eye_</h1>
-    <div class="big-text-box">
-        <p style="margin-bottom: 25px;">> [LOG_DATA_01]: CHARGEMENT DE LA BANDE SONORE CHARGÉE AVEC SUCCÈS...</p>
-        
-        <div class="audio-system-container">
-            
-            <div class="cd-player-hardware">
-                <div class="profile-pic"></div>
-            </div>
-            
-            <div class="spotify-wrapper">
-                <p style="font-size: 0.65rem; color: #00ff66; margin-top: 0; margin-bottom: 10px; letter-spacing: 1px;">
-                    > AMBIENT_STREAM : CONNECTED_TO_PLAYLIST_SYS
-                </p>
-                <iframe data-testid="embed-iframe" style="border-radius:6px" 
-                        src="https://open.spotify.com/embed/playlist/6CAS0EcQ6ueJQM5hf2iTHQ?utm_source=generator&theme=0" 
-                        width="100%" height="152" frameBorder="0" allowfullscreen="" 
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                </iframe>
-            </div>
+            <div id="logs" class="page-content">
+                <h1>SPOT.IF.Eye_</h1>
+                <div class="big-text-box">
+                    <p style="margin-bottom: 25px;">> [LOG_DATA_01]: CHARGEMENT DE LA BANDE SONORE CHARGÉE AVEC SUCCÈS...</p>
+                    
+                    <div class="audio-system-container">
+                        
+                        <div class="cd-player-hardware">
+                            <div class="profile-pic"></div>
+                        </div>
+                        
+                        <div class="spotify-wrapper">
+                            <p style="font-size: 0.65rem; color: #00ff66; margin-top: 0; margin-bottom: 10px; letter-spacing: 1px;">
+                                > AMBIENT_STREAM : CONNECTED_TO_PLAYLIST_SYS
+                            </p>
+                            <iframe data-testid="embed-iframe" style="border-radius:6px" 
+                                    src="https://open.spotify.com/embed/playlist/6CAS0EcQ6ueJQM5hf2iTHQ?utm_source=generator&theme=0" 
+                                    width="100%" height="152" frameBorder="0" allowfullscreen="" 
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                            </iframe>
+                        </div>
 
-        </div>
-    </div>
-</div>
+                    </div>
+                </div>
+            </div>
 
             <div id="gallery" class="page-content">
                 <h1>MEDIA_DB_</h1>
@@ -483,23 +535,16 @@
             const loaderBar = document.getElementById('loader-bar');
             const siteContent = document.getElementById('site-main-content');
 
-            // Date fixée au 13 février -> "1302"
             if (input === "1302") { 
                 errorMsg.style.display = "none";
-                controls.style.display = "none"; // On bloque les boutons d'input
-                
-                // On prépare l'affichage de la jauge
+                controls.style.display = "none";
                 loaderBox.style.display = "block";
                 let width = 0;
                 
                 const interval = setInterval(() => {
                     if (width >= 100) {
                         clearInterval(interval);
-                        
-                        // ÉTAPE CRUCIALE : On affiche le site d'un coup
                         siteContent.style.display = "grid"; 
-                        
-                        // On efface doucement l'écran noir de chargement
                         const screen = document.getElementById('loading-screen');
                         screen.style.transition = "opacity 0.4s ease";
                         screen.style.opacity = "0";
@@ -508,20 +553,18 @@
                             screen.style.display = "none";
                         }, 400);
                     } else {
-                        width += 4; // Vitesse du chargement de la jauge RobCo
+                        width += 4;
                         loaderBar.style.width = width + "%";
                     }
                 }, 80);
 
             } else {
-                // Erreur si mauvaise date
                 errorMsg.style.display = "block";
                 document.getElementById('birthdate-input').value = "";
                 document.getElementById('birthdate-input').focus();
             }
         }
 
-        // Écoute de la touche Entrée
         document.getElementById('birthdate-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 checkAccess();
