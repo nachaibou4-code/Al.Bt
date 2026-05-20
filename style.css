@@ -287,3 +287,160 @@ h1 {
     box-sizing: border-box;
     z-index: 10;
 }
+/* ================= ZONE REAR-ARCADE PRO ================= */
+.arcade-layout {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    align-items: flex-start;
+}
+
+.arcade-logs, .arcade-side-panels {
+    width: 25%;
+    font-family: monospace;
+}
+
+.retro-box {
+    border: 1px solid #00ff66;
+    background: rgba(0, 20, 0, 0.6);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,255,102,0.2);
+}
+
+.retro-box h3 {
+    color: #00ff66;
+    font-size: 0.9rem;
+    margin-top: 0;
+}
+
+.badges-row {
+    font-size: 1.5rem;
+    display: flex;
+    gap: 15px;
+}
+
+/* La borne d'arcade */
+.arcade-cabinet {
+    width: 50%;
+    background: #111;
+    border: 4px solid #00ff66;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 0 30px rgba(0, 255, 102, 0.3);
+    position: relative;
+}
+
+/* L'écran cathodique */
+.arcade-screen-wrapper {
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 3px solid #222;
+    box-shadow: inset 0 0 40px rgba(0,0,0,1);
+}
+
+#game-container {
+    width: 100%;
+    height: 350px;
+    position: relative;
+    /* On applique ton image pixel-art ici ! */
+    background: url('arcade_bg.png') no-repeat center;
+    background-size: cover;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+/* Interface du jeu */
+#score-board, #lives-board {
+    position: absolute;
+    top: 10px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+    z-index: 5;
+}
+#score-board { left: 15px; }
+#lives-board { right: 15px; }
+
+/* Le joueur (Jersey) */
+#jersey-player {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    transition: left 0.1s ease-out;
+    z-index: 4;
+    user-select: none;
+}
+
+/* Les objets qui tombent (Vinyles, Coeurs...) */
+.falling-item {
+    position: absolute;
+    font-size: 1.8rem;
+    z-index: 3;
+    user-select: none;
+}
+
+/* Écran de veille / Game over */
+#arcade-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#start-btn {
+    background: transparent;
+    border: 2px solid #00ff66;
+    color: #00ff66;
+    padding: 10px 20px;
+    font-family: monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,255,102,0.4);
+}
+#start-btn:hover {
+    background: #00ff66;
+    color: #000;
+}
+
+/* Les faux boutons physiques en bas */
+.cabinet-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+.btn-physic {
+    background: #222;
+    border: 2px solid #444;
+    color: #888;
+    padding: 5px 12px;
+    font-size: 0.7rem;
+    font-family: monospace;
+    border-radius: 4px;
+}
+.action-btn {
+    background: #aa0000;
+    border-color: #ff3333;
+    color: #fff;
+}
+
+/* Bandeau défilant */
+.ticker-tape {
+    background: #00ff66;
+    color: #000;
+    font-family: monospace;
+    font-weight: bold;
+    padding: 4px 0;
+    margin-top: 25px;
+    text-transform: uppercase;
+}

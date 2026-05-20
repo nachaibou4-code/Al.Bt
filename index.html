@@ -448,6 +448,7 @@
                 <a href="#logs" class="nav-item">[ 02_SPOT.IF.Eye ]</a>
                 <a href="#gallery" class="nav-item">[ 03_GYAL.EUH.RI ]</a>
                 <a href="#message" class="nav-item">[ 04_TERMINAL ]</a>
+                <div class="menu-item" onclick="showPage('arcade')">[ 05_ARCADE ]</div>
             </nav>
             <div style="margin-top: auto; font-size: 0.55rem; color: #444; letter-spacing: 1px;">
                 CONNECTED_FROM: IP_NESWORK
@@ -522,7 +523,62 @@
                     <p>> Accès terminal sécurisé.</p>
                 </div>
             </div>
+<div id="arcade" class="page-content" style="display: none;">
+    <h1>JERSEY'S CATCH_</h1>
+    
+    <div class="arcade-layout">
+        <div class="arcade-logs">
+            <p class="neon-green">> LOG_DATA: INITIALIZING ARCAD_SYS...</p>
+            <p class="neon-green">> USER_INPUT: ACTIVE</p>
+            <p class="neon-green">> CONTROLS: USE MOUSE OR TOUCH</p>
+            <p class="neon-green" id="live-log">> WAITING FOR START...</p>
+        </div>
 
+        <div class="arcade-cabinet">
+            <div class="arcade-screen-wrapper">
+                <div id="game-container">
+                    <div id="score-board">SCORE: <span id="score-val">00000</span></div>
+                    <div id="lives-board">LIVES: <span id="lives-val">♥♥♥</span></div>
+                    
+                    <div id="jersey-player">🐈‍⬛</div>
+                    
+                    <div id="arcade-overlay">
+                        <button id="start-btn" onclick="startGame()">[ START_GAME ]</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cabinet-controls">
+                <div class="btn-physic">LEFT</div>
+                <div class="btn-physic">RIGHT</div>
+                <div class="btn-physic action-btn">CATCH</div>
+            </div>
+        </div>
+
+        <div class="arcade-side-panels">
+            <div class="retro-box">
+                <h3>> ARCADE_HIGH_RECORDS:</h3>
+                <ol>
+                    <li>ALEX - 1302 pts</li>
+                    <li>NAIMDZ - 1200 pts</li>
+                    <li>JERSEY - 0900 pts</li>
+                </ol>
+            </div>
+            <div class="retro-box">
+                <h3>> ACHIEVEMENTS:</h3>
+                <div class="badges-row">
+                    <span title="Premier Vinyle Attrapé">🏆</span>
+                    <span title="Heart Collector">❤️</span>
+                    <span title="Super Score">⭐</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ticker-tape">
+        <marquee scrollamount="5">⚡ SAVE JERSEY // CATCH THE VINYLS // LOVE_TERMINAL_ONLINE ⚡</marquee>
+    </div>
+</div>
         </section>
     </div>
 

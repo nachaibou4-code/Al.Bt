@@ -179,3 +179,129 @@ buttonElement.addEventListener('click', () => {
     const selectedPhrase = lovePhrases[randomIndex];
     typeWriter(selectedPhrase);
 });
+// ================= MOTEUR DU MINI-JEU RETRO =================
+let score = 0;
+let lives = 3;
+let gameInterval;
+let itemInterval;
+let isPlaying = false;
+
+const container = document.getElementById('game-container');
+const player = document.getElementById('jersey-player');
+const scoreVal = document.getElementById('score-val');
+const livesVal = document.getElementById('lives-val');
+const overlay = document.getElementById('arcade-overlay');
+const startBtn = document.getElementById('start-btn');
+const logLine = document.getElementById('live-log');
+
+// Déplacement de Jersey au mouvement de la souris sur l'écran
+container.addEventListener('mousemove', (e) => {
+    if (!isPlaying) return;
+    const rect = container.getBoundingClientRect();
+    let relX = e.clientX - rect.left;
+    // On restreint pour que le chat reste dans l'écran
+    if (relX < 20) relX = 20;
+    if (relX > rect.width - 20) relX = rect.width - 20;
+    player.style.left = relX + 'px';
+});
+
+function startGame() {
+    // Reset variables
+    score = 0;
+    lives = 3;
+    isPlaying = true;
+    scoreVal.innerText = "00000";
+    livesVal.innerText = "♥♥♥";
+    overlay.style.display = 'none';
+    logLine.innerText = "> GAME_STATUS: RUNNING_";
+
+    // Lancement de la boucle de pop d'objets
+    itemInterval = setInterval(createFallingItem, 900);
+}
+
+function createFallingItem() {
+    if (!isPlaying) return;
+
+    const item = document.createElement('div');
+    item.classList.add('falling-item');
+    
+    // Un coup un vinyle, un coup un coeur, un coup une bombe !
+    const types = ['💿', '❤️', '💿', '💥'];
+    const chosen = types[Math.floor(Math.random() * types.length)];
+    item.innerText = chosen;
+    
+    // Position x aléatoire
+    const width = container.clientWidth;
+    item.style.left = Math.floor(Math.random() * (width - 40)) + 20 + 'px';
+    item.style.top = '0px';
+    container.appendChild(item);
+
+    // Chute de l'objet
+    let topPos = 0;
+    let fallSpeed = 4 + Math.random() * 3; // vitesse variable
+
+    let fallTimer = setInterval(() => {
+        if (!isPlaying) {
+            clearInterval(fallTimer);
+            item.remove();
+            return;
+        }
+
+        topPos += fallSpeed;
+        item.style.top = topPos + 'px';
+
+        // Détection de collision avec Jersey
+        const playerRect = player.getBoundingClientRect();
+        const itemRect = item.getBoundingClientRect();
+
+        if (
+            itemRect.bottom >= playerRect.top &&
+            itemRect.right >= playerRect.left &&
+            itemRect.left <= playerRect.right &&
+            itemRect.top <= playerRect.bottom
+        ) {
+            clearInterval(fallTimer);
+            item.remove();
+            handleCatch(chosen);
+        }
+
+        // Si l'objet touche le sol
+        if (topPos > 320) {
+            clearInterval(fallTimer);
+            item.remove();
+            if (chosen === '💿' || chosen === '❤️') {
+                logLine.innerText = "> SYSTEM: ITEM DROPPED...";
+            }
+        }
+    }, 20);
+}
+
+function handleCatch(type) {
+    if (type === '💿') {
+        score += 100;
+        logLine.innerText = "> SYSTEM: VINYL CAPTURED! +100";
+    } else if (type === '❤️') {
+        score += 150;
+        logLine.innerText = "> SYSTEM: LOVE COLLECTED! +150";
+    } else if (type === '💥') {
+        lives--;
+        logLine.innerText = "> WARNING: SYSTEM DAMAGE! -1 LIVE";
+        updateLives();
+        if (lives <= 0) gameOver();
+    }
+    scoreVal.innerText = String(score).padStart(5, '0');
+}
+
+function updateLives() {
+    let hearts = "";
+    for(let i=0; i<lives; i++) hearts += "♥";
+    livesVal.innerText = hearts || "---";
+}
+
+function gameOver() {
+    isPlaying = false;
+    clearInterval(itemInterval);
+    overlay.style.display = 'flex';
+    startBtn.innerText = "[ RESTART_SYSTEM ]";
+    logLine.innerText = `> GAME OVER. SCORE FINAL: ${score}`;
+}
