@@ -4,630 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AL.BT_SYS</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg: #080808;
-            --line: #222;
-            --accent: #ffffff;
-            --dim-text: #666;
-            --terminal-green: #00ff66; /* Vert signature de la machine */
-        }
-
-        body {
-            background-color: var(--bg);
-            color: white;
-            font-family: 'JetBrains Mono', monospace;
-            margin: 0;
-            padding: 0;
-            text-transform: uppercase;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Grille technique en fond */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(var(--line) 1px, transparent 1px), 
-                              linear-gradient(90deg, var(--line) 1px, transparent 1px);
-            background-size: 40px 40px;
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* ================= SCREEN DE SÉCURITÉ RE-SÉCURISÉ ================= */
-        #loading-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #010601;
-            z-index: 1000000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Lignes CRT de l'écran terminal */
-        #loading-screen::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
-            background-size: 100% 4px;
-            z-index: 1000002;
-            pointer-events: none;
-        }
-
-        .terminal-gate {
-            width: 90%;
-            max-width: 600px;
-            border: 2px solid var(--terminal-green);
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);
-            background: #020a02;
-            box-sizing: border-box;
-        }
-
-        .terminal-gate h2 {
-            color: var(--terminal-green);
-            font-family: 'Syncopate', sans-serif;
-            font-size: 1.2rem;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-shadow: 0 0 5px rgba(0, 255, 102, 0.6);
-        }
-
-        .terminal-gate p {
-            color: var(--terminal-green);
-            font-size: 0.85rem;
-            line-height: 1.6;
-            margin: 10px 0;
-        }
-
-        .input-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .terminal-prompt {
-            color: var(--terminal-green);
-            font-weight: bold;
-        }
-
-        .terminal-input {
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid var(--terminal-green);
-            color: var(--terminal-green);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.1rem;
-            outline: none;
-            padding: 5px;
-            width: 150px;
-            letter-spacing: 2px;
-        }
-
-        .terminal-btn {
-            background: transparent;
-            border: 1px solid var(--terminal-green);
-            color: var(--terminal-green);
-            font-family: 'JetBrains Mono', monospace;
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .terminal-btn:hover {
-            background: var(--terminal-green);
-            color: #010601;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
-        }
-
-        .loading-bar-container {
-            width: 100%;
-            border: 1px solid var(--terminal-green);
-            height: 20px;
-            margin-top: 20px;
-            display: none;
-            padding: 2px;
-            box-sizing: border-box;
-        }
-
-        .loading-bar-progress {
-            height: 100%;
-            background-color: var(--terminal-green);
-            width: 0%;
-            transition: width 0.1s linear;
-            box-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
-        }
-
-        #error-msg {
-            color: #ff3333;
-            font-size: 0.75rem;
-            margin-top: 15px;
-            display: none;
-            text-shadow: 0 0 4px rgba(255, 0, 0, 0.4);
-        }
-
-        /* ================= LA GRILLE PRINCIPALE (SIDEBAR + CONTENU) ================= */
-        .main-grid {
-            display: none; /* Caché au démarrage tant que l'accès n'est pas validé */
-            grid-template-columns: 300px 1fr;
-            min-height: 100vh;
-            box-sizing: border-box;
-            padding: 30px;
-            gap: 40px;
-        }
-
-        /* Barre latérale gauche (Sidebar) */
-        .sidebar {
-            border-right: 1px solid var(--line);
-            padding-right: 30px;
-            display: flex;
-            flex-direction: column;
-            height: calc(100vh - 60px);
-            position: sticky;
-            top: 30px;
-            box-sizing: border-box;
-        }
-
-        .sidebar nav {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 50px;
-        }
-
-        .nav-item {
-            background: transparent;
-            border: 1px solid #333;
-            color: var(--dim-text);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            padding: 14px 20px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            letter-spacing: 2px;
-            display: block;
-            box-sizing: border-box;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background: transparent !important;
-            border: 1px solid var(--terminal-green) !important;
-            color: var(--terminal-green) !important;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
-            font-weight: bold;
-        }
-
-        /* ================= ZONE DE CONTENU PRINCIPAL ================= */
-        .content {
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            padding-top: 10px;
-        }
-
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.65rem;
-            border-bottom: 1px solid var(--line);
-            padding-bottom: 15px;
-            margin-bottom: 40px;
-            color: var(--dim-text);
-            letter-spacing: 1px;
-        }
-
-        h1 {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 3.5rem;
-            margin: 0 0 25px 0;
-            line-height: 0.9;
-            letter-spacing: -2px;
-        }
-
-        .big-text-box {
-            border: 1px solid var(--line);
-            padding: 25px;
-            background-color: rgba(12, 12, 12, 0.3);
-            margin-bottom: 40px;
-        }
-
-        .big-text-box p {
-            margin: 12px 0;
-            line-height: 1.6;
-        }
-
-        .page-content {
-            display: none;
-        }
-
-        .page-content.active {
-            display: block;
-            animation: systemBoot 0.3s ease-out;
-        }
-
-        @keyframes systemBoot {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ================= TERMINAL DE LOGS ================= */
-        .terminal-message-box {
-            background: #010601;
-            border: 1.5px solid var(--terminal-green);
-            padding: 25px;
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.15);
-            position: relative;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-
-        #random-message {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--terminal-green);
-            text-shadow: 0 0 4px rgba(0, 255, 102, 0.5);
-            min-height: 90px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            white-space: pre-line;
-            font-size: 0.9rem;
-            text-transform: none;
-        }
-
-        #generate-btn {
-            background: transparent;
-            border: 1px solid var(--terminal-green);
-            color: var(--terminal-green);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            padding: 12px 22px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.2s ease;
-            letter-spacing: 1px;
-        }
-
-        #generate-btn:hover {
-            background: var(--terminal-green);
-            color: #010601;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
-        }
-
-        .terminal-message-box::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
-            z-index: 2;
-            background-size: 100% 3px, 4px 100%;
-            pointer-events: none;
-        }
-
-        /* ================= PLATINE AUDIO RETRO & MODULE CD ================= */
-        .audio-system-container {
-            display: flex;
-            flex-direction: row; /* Aligne le CD et Spotify côte à côte */
-            align-items: center;
-            justify-content: flex-start;
-            gap: 35px;
-            margin-top: 25px;
-            background: #0d130e; /* Couleur cockpit */
-            border: 2px solid var(--terminal-green);
-            padding: 35px 25px;
-            box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.2), 0 10px 30px rgba(0,0,0,0.7);
-            border-radius: 8px;
-            position: relative;
-            flex-wrap: wrap;
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        .audio-system-container::before {
-            content: "• DECK_A: ACTIVE // SYSTEM_STREAM_ONLINE";
-            position: absolute;
-            top: 8px;
-            left: 15px;
-            font-size: 0.6rem;
-            color: rgba(0, 255, 102, 0.6);
-            letter-spacing: 1px;
-        }
-
-        .cd-player-hardware {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            flex-shrink: 0;
-            perspective: 1000px;
-        }
-
-        .profile-pic {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            box-sizing: border-box;
-            z-index: 5;
-            cursor: pointer;
-            background: url('IA_NES_ET_ALEX.png') no-repeat center;
-            background-size: cover;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-left: 6px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
-            border-radius: 4px;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .cd-player-hardware:hover .profile-pic {
-            transform: rotateY(-20deg) scale(1.02);
-        }
-
-        .cd-player-hardware::before {
-            content: "";
-            background: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png') no-repeat center;
-            background-size: contain;
-            position: absolute;
-            top: 15px; left: 5px;
-            width: 150px; height: 150px;
-            z-index: 2;
-            animation: spinCD 4s infinite linear;
-            transition: left 0.4s ease-out;
-        }
-
-        .cd-player-hardware:hover::before {
-            left: 100px;
-            z-index: 6;
-            filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.4));
-        }
-
-        @keyframes spinCD {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .spotify-wrapper {
-            flex-grow: 1;
-            min-width: 280px;
-            background: rgba(4, 6, 4, 0.8);
-            border: 1px solid rgba(0, 255, 102, 0.25);
-            padding: 15px;
-            border-radius: 6px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
-            box-sizing: border-box;
-            z-index: 10;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="loading-screen">
-        <div class="terminal-gate" id="gate-content">
-            <h2> SUPERNES INDUSTRIES (TM)</h2>
-            <p>> UNIFIED OPERATING SYSTEM v40.4</p>
-            <p>> PROTOCOLE DE SECURITE CRITIQUE ACTIVE.</p>
-            <p>> VEUILLEZ SAISIR LE CODE DE L'ADMINISTRATEUR POUR DEVERROUILLER LES FICHIERS CONTENUS DANS LE SYSTEME_</p>
-            <p style="color: #666; font-size: 0.75rem; margin-top: 15px;">(INDICE : DATE DE NAISSANCE DE LA MEILLEURE PERSONNE SUR CETTE TERRE ESSAYEZ DE NE PAS REOUBLIER OU CETTE MACHINE S'AUTODETRUIRA - FORMAT: JJMM)</p>
+    <div class="system-container">
+        
+        <nav class="sidebar">
+            <div class="system-title">AL.BT_SYS</div>
             
-            <div class="input-area" id="gate-controls">
-                <span class="terminal-prompt">PASSWORD ></span>
-                <input type="text" id="birthdate-input" class="terminal-input" maxlength="4" placeholder="••••" autofocus style="-webkit-text-security: disc;">
-                <button onclick="checkAccess()" class="terminal-btn">ENTER</button>
-            </div>
-            
-            <div id="error-msg">> ACCES REFUSE. REESSAYEZ.</div>
-
-            <div class="loading-bar-container" id="loader-box">
-                <div class="loading-bar-progress" id="loader-bar"></div>
-            </div>
-        </div>
-    </div>
-
-    <script>NekoType="ace"</script>
-    <h1 id="nl" style="display: none !important;">
-        <script src="https://webneko.net/n20171213.js"></script>
-        <a href="https://webneko.net">Neko</a>
-    </h1>
-
-    <div class="main-grid" id="site-main-content">
-        <aside class="sidebar">
-            <div style="font-weight: bold; font-size: 1.2rem; letter-spacing: 2px;">AL.BT_SYS</div>
-            <nav>
-                <a href="#home" class="nav-item active">[ 01_ACCUEIL ]</a>
-                <a href="#logs" class="nav-item">[ 02_SPOT.IF.Eye ]</a>
-                <a href="#gallery" class="nav-item">[ 03_GYAL.EUH.RI ]</a>
-                <a href="#message" class="nav-item">[ 04_TERMINAL ]</a>
+            <div class="menu-items-container">
+                <div class="menu-item active" onclick="showPage('accueil')">[ 01_ACCUEIL ]</div>
+                <div class="menu-item" onclick="showPage('archives')">[ 02_ARCHIVES ]</div>
+                <div class="menu-item" onclick="showPage('galerie')">[ 03_GALERIE ]</div>
+                <div class="menu-item" onclick="showPage('terminal')">[ 04_TERMINAL ]</div>
                 <div class="menu-item" onclick="showPage('arcade')">[ 05_ARCADE ]</div>
-            </nav>
-            <div style="margin-top: auto; font-size: 0.55rem; color: #444; letter-spacing: 1px;">
+            </div>
+
+            <div class="system-footer-info">
                 CONNECTED_FROM: IP_NESWORK
             </div>
-        </aside>
+        </nav>
 
-        <section class="content">
-            <div class="status-bar">
-                <span>VERSION 2.0.26</span>
-                <span>DATE: 30.05.2026</span>
-                <span>USER: ALEXANDRE_BATISSE</span>
-            </div>
+        <main class="content-viewport">
+            
+            <header class="system-header">
+                <div class="header-left">VERSION 2.0.26</div>
+                <div class="header-center">DATE: 30.05.2026</div>
+                <div class="header-right">USER: ALEXANDRE_BATISSE</div>
+            </header>
 
-            <div id="home" class="page-content active">
-                <h1>SYSTEM<br>OVERRIDE</h1>
+            <div id="accueil" class="page-content">
+                <h1>ACCUEIL_</h1>
                 <div class="big-text-box">
-                    <p>愛してる、負け犬。</p>
-                    <p style="font-size: 0.8rem; color: #888;">> JE T'AIME, GROS LOSER. ACCÈS TOTAL ACCORDÉ AU RESTE DES DONNÉES.</p>
-                    <p style="text-transform: none;">> JoYeuXx AnnivErSaiRe A ToI mON aM%OuR.</p>
-                    <p style="text-transform: none;">> JE tAImEe FoRtt !!!</p>
-                    <p style="text-transform: none;">> Jersey Veut jouer avec toi mec.</p>
-                    <p style="text-transform: none;">> Tu vois sur le coté a Gauche ( oui j'ai fais le truc L avec les mains)</p>
-                    <p style="text-transform: none;">> En haut a Gauche</p>
-                    <p style="text-transform: none;">> Jersey t'attends tu dois clicker sur elle puis elle va te poursuivre hihi.</p>
-                    <p style="text-transform: none;">> uNE pArtie de ton cadeau du coup c'est un petit sI$te avec pleins de souvenirs et de choses qui me font penser a toi</p>
-                    <p style="text-transform: none;">> eT Qui foNt quEe je pens%e a toi souvent et très fOrt.</p>
-                    <p style="text-transform: none;">> Pour commencer : 70 petits mots d'amour (parfois un peu de haine on est pas gay frr ).</p>
-                </div> 
-                
-                <div class="terminal-message-box">
-                    <div id="random-message">> EN ATTENTE DE COMMANDE...</div>
-                    <button id="generate-btn">[ GENERATE_NEW_LOG ]</button>
+                    <p>> [SYSTEM_READY] : BIENVENUE SUR L'INTERFACE AL.BT_SYS.</p>
+                    <p>> INITIALISATION DU PROTOCOLE DE SOUVENIRS TERMINÉE...</p>
                 </div>
             </div>
 
-            <div id="logs" class="page-content">
-                <h1>SPOT.IF.Eye_</h1>
+            <div id="archives" class="page-content" style="display: none;">
+                <h1>SPOT.IF.EYE_</h1>
                 <div class="big-text-box">
                     <p style="margin-bottom: 25px;">> [LOG_DATA_01]: CHARGEMENT DE LA BANDE SONORE CHARGÉE AVEC SUCCÈS...</p>
                     
                     <div class="audio-system-container">
-                        
-                        <div class="cd-player-hardware">
+                        <div class="cd-case-wrapper">
                             <div class="profile-pic"></div>
+                            <div class="cd-disc"></div>
                         </div>
-                        
-                        <div class="spotify-wrapper">
-                            <p style="font-size: 0.65rem; color: #00ff66; margin-top: 0; margin-bottom: 10px; letter-spacing: 1px;">
-                                > AMBIENT_STREAM : CONNECTED_TO_PLAYLIST_SYS
-                            </p>
-                            <iframe data-testid="embed-iframe" style="border-radius:6px" 
-                                    src="https://open.spotify.com/embed/playlist/6CAS0EcQ6ueJQM5hf2iTHQ?utm_source=generator&theme=0" 
+
+                        <div class="spotify-tracklist">
+                            <p class="ambient-stream-text">> AMBIENT_STREAM : CONNECTED_TO_PLAYLIST_SYS</p>
+                            <iframe style="border-radius:12px" 
+                                    src="https://open.spotify.com/embed/playlist/5K6bF9hDPrPscuFjD6H9pY?utm_source=generator&theme=0" 
                                     width="100%" height="152" frameBorder="0" allowfullscreen="" 
                                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
                             </iframe>
                         </div>
-
                     </div>
                 </div>
             </div>
 
-            <div id="gallery" class="page-content">
-                <h1>MEDIA_DB_</h1>
+            <div id="galerie" class="page-content" style="display: none;">
+                <h1>GYAL.EUH.RI_</h1>
                 <div class="big-text-box">
-                    <p>> [MEDIA_ERR]: Aucune image importée pour le moment.</p>
-                </div>
+                    <p>> [LOG_DATA_02]: CHARGEMENT DU MODULE VISUEL...</p>
+                    </div>
             </div>
 
-            <div id="message" class="page-content">
+            <div id="terminal" class="page-content" style="display: none;">
                 <h1>SYS_STATUS_</h1>
                 <div class="big-text-box">
-                    <p>> Accès terminal sécurisé.</p>
+                    <p>> ACCÈS TERMINAL SÉCURISÉ.</p>
                 </div>
             </div>
-<div id="arcade" class="page-content" style="display: none;">
-    <h1>JERSEY'S CATCH_</h1>
-    
-    <div class="arcade-layout">
-        <div class="arcade-logs">
-            <p class="neon-green">> LOG_DATA: INITIALIZING ARCAD_SYS...</p>
-            <p class="neon-green">> USER_INPUT: ACTIVE</p>
-            <p class="neon-green">> CONTROLS: USE MOUSE OR TOUCH</p>
-            <p class="neon-green" id="live-log">> WAITING FOR START...</p>
-        </div>
 
-        <div class="arcade-cabinet">
-            <div class="arcade-screen-wrapper">
-                <div id="game-container">
-                    <div id="score-board">SCORE: <span id="score-val">00000</span></div>
-                    <div id="lives-board">LIVES: <span id="lives-val">♥♥♥</span></div>
-                    
-                    <div id="jersey-player">🐈‍⬛</div>
-                    
-                    <div id="arcade-overlay">
-                        <button id="start-btn" onclick="startGame()">[ START_GAME ]</button>
+            <div id="arcade" class="page-content" style="display: none;">
+                <h1>JERSEY'S CATCH_</h1>
+                
+                <div class="arcade-layout">
+                    <div class="arcade-side-panel logs-panel">
+                        <p class="neon-green">> LOG_DATA: INITIALIZING ARCAD_SYS...</p>
+                        <p class="neon-green">> USER_INPUT: ACTIVE</p>
+                        <p class="neon-green">> CONTROLS: USE MOUSE ON SCREEN</p>
+                        <p class="neon-green" id="live-log">> WAITING FOR START...</p>
+                    </div>
+
+                    <div class="arcade-cabinet">
+                        <div class="arcade-screen-wrapper">
+                            <div id="game-container">
+                                <div id="score-board">SCORE: <span id="score-val">00000</span></div>
+                                <div id="lives-board">LIVES: <span id="lives-val">♥♥•</span></div>
+                                
+                                <div id="jersey-player">🐈‍⬛</div>
+                                
+                                <div id="arcade-overlay">
+                                    <button id="start-btn" onclick="startGame()">[ START_GAME ]</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cabinet-controls">
+                            <div class="btn-physic">LEFT</div>
+                            <div class="btn-physic">RIGHT</div>
+                            <div class="btn-physic action-btn">CATCH</div>
+                        </div>
+                    </div>
+
+                    <div class="arcade-side-panel stats-panel">
+                        <div class="retro-box">
+                            <div class="retro-box-title">> ARCADE_HIGH_SCORES:</div>
+                            <ol class="scores-list">
+                                <li>ALEX: 1302</li>
+                                <li>NAIMDZ: 1200</li>
+                                <li>NAIMDZ: 900</li>
+                                <li>NAIMDZ: 600</li>
+                                <li>NAIMDZ: 500</li>
+                            </ol>
+                        </div>
+                        <div class="retro-box">
+                            <div class="retro-box-title">> JERSEY'S_ACHIEVEMENTS:</div>
+                            <div class="badges-row">
+                                <span class="badge" title="First Vinyl">🏆</span>
+                                <span class="badge" title="Heart Collector">❤️</span>
+                                <span class="badge" title="Secret Badge">⭐</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="cabinet-controls">
-                <div class="btn-physic">LEFT</div>
-                <div class="btn-physic">RIGHT</div>
-                <div class="btn-physic action-btn">CATCH</div>
-            </div>
-        </div>
-
-        <div class="arcade-side-panels">
-            <div class="retro-box">
-                <h3>> ARCADE_HIGH_RECORDS:</h3>
-                <ol>
-                    <li>ALEX - 1302 pts</li>
-                    <li>NAIMDZ - 1200 pts</li>
-                    <li>JERSEY - 0900 pts</li>
-                </ol>
-            </div>
-            <div class="retro-box">
-                <h3>> ACHIEVEMENTS:</h3>
-                <div class="badges-row">
-                    <span title="Premier Vinyle Attrapé">🏆</span>
-                    <span title="Heart Collector">❤️</span>
-                    <span title="Super Score">⭐</span>
+                
+                <div class="ticker-tape">
+                    <marquee scrollamount="5">⚡ SAVE JERSEY // CATCH THE VINYLS // LOVE_TERMINAL_ONLINE ⚡</marquee>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <div class="ticker-tape">
-        <marquee scrollamount="5">⚡ SAVE JERSEY // CATCH THE VINYLS // LOVE_TERMINAL_ONLINE ⚡</marquee>
-    </div>
-</div>
-        </section>
+
+        </main>
     </div>
 
-    <script>
-        function checkAccess() {
-            const input = document.getElementById('birthdate-input').value.trim();
-            const errorMsg = document.getElementById('error-msg');
-            const controls = document.getElementById('gate-controls');
-            const loaderBox = document.getElementById('loader-box');
-            const loaderBar = document.getElementById('loader-bar');
-            const siteContent = document.getElementById('site-main-content');
-
-            if (input === "1302") { 
-                errorMsg.style.display = "none";
-                controls.style.display = "none";
-                loaderBox.style.display = "block";
-                let width = 0;
-                
-                const interval = setInterval(() => {
-                    if (width >= 100) {
-                        clearInterval(interval);
-                        siteContent.style.display = "grid"; 
-                        const screen = document.getElementById('loading-screen');
-                        screen.style.transition = "opacity 0.4s ease";
-                        screen.style.opacity = "0";
-                        
-                        setTimeout(() => {
-                            screen.style.display = "none";
-                        }, 400);
-                    } else {
-                        width += 4;
-                        loaderBar.style.width = width + "%";
-                    }
-                }, 80);
-
-            } else {
-                errorMsg.style.display = "block";
-                document.getElementById('birthdate-input').value = "";
-                document.getElementById('birthdate-input').focus();
-            }
-        }
-
-        document.getElementById('birthdate-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkAccess();
-            }
-        });
-    </script>
-
-    <script src="script.js?v=2.4"></script>
+    <script src="script.js"></script>
 </body>
 </html>
