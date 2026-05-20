@@ -183,3 +183,104 @@ h1 {
     background-size: 100% 3px, 4px 100%;
     pointer-events: none;
 }
+
+/* ================= APPAREIL AUDIO RETRO ARCHIVES ================= */
+.audio-system-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 25px;
+    background: #0d130e; /* Fond vert cockpit / militaire */
+    border: 2px solid #00ff66; /* Forcé en vert Fallout pour la machine */
+    padding: 30px;
+    box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.2), 0 10px 30px rgba(0,0,0,0.7);
+    border-radius: 8px;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+/* Petits détails de terminal au-dessus de la platine */
+.audio-system-container::before {
+    content: "• ON • OFF      [ VU_METER: ACTIVE ]      MODE: VAULT_RADIO";
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    font-size: 0.6rem;
+    color: rgba(0, 255, 102, 0.5);
+    letter-spacing: 2px;
+}
+
+/* Structure de la platine pour caler le boîtier et le disque */
+.cd-player-hardware {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    perspective: 1000px; /* Permet l'effet d'ouverture 3D */
+}
+
+/* La pochette physique (Ton illustration Gorillaz) */
+.profile-pic {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+    cursor: pointer;
+    
+    /* Charge ton image sur GitHub */
+    background: url('IA_NES_ET_ALEX.png'), #111;
+    background-size: cover;
+    background-position: center;
+    
+    /* Effet boîtier de CD en plastique transparent */
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-left: 8px solid rgba(255, 255, 255, 0.2); /* Tranche du boîtier */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 0 10px rgba(255,255,255,0.1);
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+}
+
+/* Effet d'ouverture du boîtier au survol */
+.cd-player-hardware:hover .profile-pic {
+    transform: rotateY(-15deg);
+}
+
+/* LE DISQUE TRANSPARENT (Caché au départ, il tourne) */
+.cd-player-hardware::before {
+    content: "";
+    background: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png');
+    background-size: contain;
+    position: absolute;
+    top: 15px; left: 10px;
+    width: 170px; height: 170px;
+    background-repeat: no-repeat;
+    z-index: 1;
+    
+    animation: spinCD 4s infinite linear;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* QUAND ON PASSE LA SOURIS : Le CD s'éjecte sur la platine à droite */
+.cd-player-hardware:hover::before {
+    left: 110px; /* Glisse proprement à côté */
+    z-index: 4;  /* Passe au-dessus pour choper les reflets */
+    filter: drop-shadow(0 5px 15px rgba(0, 255, 102, 0.3));
+}
+
+@keyframes spinCD {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Boîtier sombre pour habiller le widget Spotify */
+.spotify-wrapper {
+    flex-grow: 1;
+    min-width: 280px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+}
