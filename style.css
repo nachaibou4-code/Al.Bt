@@ -230,15 +230,13 @@ h1 {
     top: 0; left: 0;
     width: 100%; height: 100%;
     box-sizing: border-box;
-    z-index: 5; /* Reste devant le CD par défaut */
+    z-index: 5;
     cursor: pointer;
-    
-    background: url('IA_NES_ET_ALEX.png') no-repeat center;
+    /* Remplacement par le lien brut de ton dépôt GitHub */
+    background: url('https://raw.githubusercontent.com/nachaibou4-code/Al.Bt/main/IA_NES_ET_ALEX.png') no-repeat center;
     background-size: cover;
-    
-    /* Effet plastique translucide de boîtier de CD */
     border: 3px solid rgba(255, 255, 255, 0.1);
-    border-left: 6px solid rgba(255, 255, 255, 0.2); /* Tranche du boîtier */
+    border-left: 6px solid rgba(255, 255, 255, 0.2);
     box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
     border-radius: 4px;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
