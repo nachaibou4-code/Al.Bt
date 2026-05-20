@@ -29,8 +29,8 @@ body::after {
     z-index: -1;
 }
 
-/* ================= LA GRILLE PRINCIPALE (SIDEBAR + CONTENU) ================= */
-.main-grid {
+/* ================= CONTAINER PRINCIPAL (SIDEBAR + CONTENU) ================= */
+.system-container {
     display: grid;
     grid-template-columns: 280px 1fr; /* Fixe la largeur du menu à gauche */
     min-height: 100vh;
@@ -50,14 +50,23 @@ body::after {
     box-sizing: border-box;
 }
 
-.sidebar nav {
+.system-title {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 30px;
+}
+
+.menu-items-container {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
-.nav-item {
+.menu-item {
     font-size: 0.75rem;
     padding: 12px 15px;
     border: 1px solid #222;
@@ -68,15 +77,22 @@ body::after {
     letter-spacing: 1px;
 }
 
-/* Effet d'inversion tactique au survol et onglet actif */
-.nav-item:hover, .nav-item.active {
+/* Effet d'inversion au survol et onglet actif */
+.menu-item:hover, .menu-item.active {
     background: white !important;
     color: black !important;
     border-color: white;
 }
 
+.system-footer-info {
+    margin-top: auto;
+    font-size: 0.6rem;
+    color: var(--dim-text);
+    letter-spacing: 1px;
+}
+
 /* ================= ZONE DE CONTENU PRINCIPAL ================= */
-.content {
+.content-viewport {
     padding: 40px;
     display: flex;
     flex-direction: column;
@@ -84,7 +100,7 @@ body::after {
 }
 
 /* Barre de statut supérieure */
-.status-bar {
+.system-header {
     display: flex;
     justify-content: space-between;
     font-size: 0.65rem;
@@ -117,11 +133,11 @@ h1 {
 
 /* ================= ONGLET ET PAGES ================= */
 .page-content {
-    display: none; /* Cache les pages inactives */
+    display: none; /* Masqué par défaut, géré par le JS */
 }
 
-.page-content.active {
-    display: block; /* Affiche uniquement l'onglet actif */
+/* Animation au boot de la page */
+.page-content[style*="display: block"] {
     animation: systemBoot 0.3s ease-out;
 }
 
@@ -188,23 +204,22 @@ h1 {
 /* ================= PLATINE AUDIO RETRO & MODULE CD ================= */
 .audio-system-container {
     display: flex;
-    flex-direction: row; /* Force l'alignement côte à côte horizontalement */
+    flex-direction: row; 
     align-items: center;
     justify-content: flex-start;
-    gap: 35px; /* Écartement propre entre le boîtier et la tracklist */
+    gap: 35px; 
     margin-top: 25px;
-    background: #0d130e; /* Fond vert cockpit / militaire */
+    background: #0d130e; 
     border: 2px solid var(--terminal-green);
     padding: 35px 25px;
     box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.2), 0 10px 30px rgba(0,0,0,0.7);
     border-radius: 8px;
     position: relative;
-    flex-wrap: wrap; /* Sécurité responsive */
+    flex-wrap: wrap; 
     box-sizing: border-box;
     width: 100%;
 }
 
-/* Détails esthétiques de terminal au-dessus de la platine */
 .audio-system-container::before {
     content: "• DECK_A: ACTIVE // SYSTEM_STREAM_ONLINE";
     position: absolute;
@@ -215,16 +230,14 @@ h1 {
     letter-spacing: 1px;
 }
 
-/* Conteneur matériel pour maintenir ensemble le CD et la Pochette */
-.cd-player-hardware {
+.cd-case-wrapper {
     position: relative;
-    width: 180px; /* Largeur fixe pour stabiliser le boîtier */
+    width: 180px; 
     height: 180px;
-    flex-shrink: 0; /* Empêche le widget Spotify d'écraser la platine */
-    perspective: 1000px; /* Donne l'effet de profondeur 3D */
+    flex-shrink: 0; 
+    perspective: 1000px; 
 }
 
-/* La pochette physique (Ton illustration Gorillaz stockée sur GitHub) */
 .profile-pic {
     position: absolute;
     top: 0; left: 0;
@@ -232,7 +245,6 @@ h1 {
     box-sizing: border-box;
     z-index: 5;
     cursor: pointer;
-    /* Remplacement par le lien brut de ton dépôt GitHub */
     background: url('https://raw.githubusercontent.com/nachaibou4-code/Al.Bt/main/IA_NES_ET_ALEX.png') no-repeat center;
     background-size: cover;
     border: 3px solid rgba(255, 255, 255, 0.1);
@@ -242,31 +254,26 @@ h1 {
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Animation 3D : Le boîtier pivote légèrement au survol */
-.cd-player-hardware:hover .profile-pic {
+.cd-case-wrapper:hover .profile-pic {
     transform: rotateY(-20deg) scale(1.02);
 }
 
-/* LE DISQUE TRANSPARENT (Parfaitement centré en attendant l'action) */
-.cd-player-hardware::before {
-    content: "";
+.cd-disc {
     background: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png') no-repeat center;
     background-size: contain;
     position: absolute;
     top: 15px; 
-    left: 5px; /* Reste caché sagement derrière la pochette */
+    left: 5px; 
     width: 150px; 
     height: 150px;
-    z-index: 2; /* Positionné derrière le boîtier */
-    
+    z-index: 2; 
     animation: spinCD 4s infinite linear;
     transition: left 0.4s ease-out;
 }
 
-/* EFFET MÉCANIQUE : Le CD sort et glisse vers la droite au survol */
-.cd-player-hardware:hover::before {
-    left: 100px; /* Se déploie sur la platine entre le boîtier et Spotify */
-    z-index: 6;   /* Passe devant pour laisser apparaître ses reflets nacrés */
+.cd-case-wrapper:hover .cd-disc {
+    left: 100px; 
+    z-index: 6;   
     filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.4));
 }
 
@@ -275,9 +282,8 @@ h1 {
     to { transform: rotate(360deg); }
 }
 
-/* Boîtier d'intégration pour caler proprement Spotify */
-.spotify-wrapper {
-    flex-grow: 1; /* Remplit tout l'espace restant à droite du CD */
+.spotify-tracklist {
+    flex-grow: 1; 
     min-width: 280px;
     background: rgba(4, 6, 4, 0.8);
     border: 1px solid rgba(0, 255, 102, 0.25);
@@ -287,7 +293,15 @@ h1 {
     box-sizing: border-box;
     z-index: 10;
 }
-/* ================= ZONE REAR-ARCADE PRO ================= */
+
+.ambient-stream-text {
+    font-size: 0.65rem;
+    color: var(--terminal-green);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+/* ================= ZONE REAR-ARCADE PRO (JERSEY'S CATCH) ================= */
 .arcade-layout {
     display: flex;
     gap: 20px;
@@ -295,13 +309,25 @@ h1 {
     align-items: flex-start;
 }
 
-.arcade-logs, .arcade-side-panels {
+.arcade-side-panel {
     width: 25%;
     font-family: monospace;
 }
 
+.logs-panel {
+    color: var(--terminal-green);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.neon-green {
+    color: var(--terminal-green);
+    text-shadow: 0 0 4px rgba(0, 255, 102, 0.3);
+    margin: 5px 0;
+}
+
 .retro-box {
-    border: 1px solid #00ff66;
+    border: 1px solid var(--terminal-green);
     background: rgba(0, 20, 0, 0.6);
     padding: 15px;
     margin-bottom: 15px;
@@ -309,27 +335,46 @@ h1 {
     box-shadow: 0 0 10px rgba(0,255,102,0.2);
 }
 
-.retro-box h3 {
-    color: #00ff66;
-    font-size: 0.9rem;
-    margin-top: 0;
+.retro-box-title {
+    color: var(--terminal-green);
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.scores-list {
+    margin: 0;
+    padding-left: 20px;
+    color: #fff;
+    font-size: 0.85rem;
+    line-height: 1.6;
 }
 
 .badges-row {
     font-size: 1.5rem;
     display: flex;
     gap: 15px;
+    margin-top: 5px;
 }
 
-/* La borne d'arcade */
+.badge {
+    cursor: help;
+    transition: transform 0.2s;
+}
+.badge:hover {
+    transform: scale(1.2);
+}
+
+/* La borne d'arcade centrale */
 .arcade-cabinet {
     width: 50%;
     background: #111;
-    border: 4px solid #00ff66;
+    border: 4px solid var(--terminal-green);
     border-radius: 12px;
     padding: 15px;
     box-shadow: 0 0 30px rgba(0, 255, 102, 0.3);
     position: relative;
+    box-sizing: border-box;
 }
 
 /* L'écran cathodique */
@@ -345,7 +390,6 @@ h1 {
     width: 100%;
     height: 350px;
     position: relative;
-    /* On applique ton image pixel-art ici ! */
     background: url('arcade_bg.png') no-repeat center;
     background-size: cover;
     overflow: hidden;
@@ -361,6 +405,7 @@ h1 {
     color: #fff;
     text-shadow: 2px 2px #000;
     z-index: 5;
+    font-size: 0.9rem;
 }
 #score-board { left: 15px; }
 #lives-board { right: 15px; }
@@ -372,7 +417,7 @@ h1 {
     left: 50%;
     transform: translateX(-50%);
     font-size: 2.5rem;
-    transition: left 0.1s ease-out;
+    transition: left 0.08s ease-out;
     z-index: 4;
     user-select: none;
 }
@@ -385,11 +430,11 @@ h1 {
     user-select: none;
 }
 
-/* Écran de veille / Game over */
+/* Écran de veille / Game over overlay */
 #arcade-overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -398,21 +443,23 @@ h1 {
 
 #start-btn {
     background: transparent;
-    border: 2px solid #00ff66;
-    color: #00ff66;
-    padding: 10px 20px;
-    font-family: monospace;
-    font-size: 1.2rem;
+    border: 2px solid var(--terminal-green);
+    color: var(--terminal-green);
+    padding: 12px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
     cursor: pointer;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0,255,102,0.4);
+    transition: all 0.2s;
 }
 #start-btn:hover {
-    background: #00ff66;
+    background: var(--terminal-green);
     color: #000;
+    box-shadow: 0 0 20px rgba(0,255,102,0.6);
 }
 
-/* Les faux boutons physiques en bas */
+/* Les faux boutons physiques sous l'écran */
 .cabinet-controls {
     display: flex;
     justify-content: center;
@@ -423,10 +470,11 @@ h1 {
     background: #222;
     border: 2px solid #444;
     color: #888;
-    padding: 5px 12px;
+    padding: 6px 14px;
     font-size: 0.7rem;
     font-family: monospace;
     border-radius: 4px;
+    box-shadow: 0 3px 0 #000;
 }
 .action-btn {
     background: #aa0000;
@@ -434,13 +482,15 @@ h1 {
     color: #fff;
 }
 
-/* Bandeau défilant */
+/* Bandeau défilant tout en bas */
 .ticker-tape {
-    background: #00ff66;
+    background: var(--terminal-green);
     color: #000;
     font-family: monospace;
     font-weight: bold;
-    padding: 4px 0;
-    margin-top: 25px;
+    padding: 6px 0;
+    margin-top: 35px;
     text-transform: uppercase;
+    font-size: 0.8rem;
+    border-radius: 2px;
 }
