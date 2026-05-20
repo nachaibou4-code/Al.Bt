@@ -133,7 +133,7 @@ const lovePhrases = [
     "> [LOG_111]:would you still love me if my feet were my hands and my hands were my feet ( a win is a win )[cite: 67]",
     "> [LOG_112]:Have you ever seen my butthole? What did you think about it?[cite: 67]",
     "> [LOG_113]:T'es chaud on genre uhm on- euh on- on- sort ensemble hihihi[cite: 67]",
-    "> [LOG_114]:T'es un peu mon crush UwU Sugoiii Kawaiiineee[cite: 67]",
+    "> [LOG_114]:T'es un peu mon crush UwU hihihi Sugoiii Kawaiiineee[cite: 67]",
     "> [LOG_115]:t'es vraiment trop mon petit Bakayaro [cite: 67]",
     "> [LOG_116]:J'aim trop faire mon bakugo genre Nani??? [cite: 67]",
     "> [LOG_117]:Bzezs ou ta paqueta ?????[cite: 67]",

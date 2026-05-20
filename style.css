@@ -16,7 +16,7 @@ body {
     min-height: 100vh;
 }
 
-/* Grille de fond technique */
+/* Grille de fond techniq */
 body::after {
     content: "";
     position: fixed;
