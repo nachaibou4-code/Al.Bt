@@ -77,11 +77,12 @@ body::after {
     letter-spacing: 1px;
 }
 
-/* Effet d'inversion au survol et onglet actif */
+/* Remplace cette partie dans ton style.css */
 .menu-item:hover, .menu-item.active {
-    background: white !important;
-    color: black !important;
-    border-color: white;
+    background: var(--terminal-green) !important; /* Devient vert fluo */
+    color: black !important;                      /* Texte écrit en noir dedans */
+    border-color: var(--terminal-green);          /* Bordure verte fluo */
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);  /* Petit effet néon brillant */
 }
 
 .system-footer-info {
