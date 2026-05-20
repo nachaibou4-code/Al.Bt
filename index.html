@@ -6,7 +6,7 @@
     <title>AL.BT_SYS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2 family=Bebas+Neue&family=JetBrains+Mono:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -200,22 +200,28 @@
             pointer-events: none;
         }
 
-        /* ================= ZONE DE SÉCURITÉ POUR ACE LE NEKO ================= */
-        #custom-neko {
+        /* ================= CONFIGURATION POUR CASER TON FICHIER ACE.HTML ================= */
+        #neko-container {
             position: fixed;
-            width: 32px;
-            height: 32px;
+            width: 48px;  /* Taille idéale pour qu'il ne soit pas trop minuscule */
+            height: 48px;
             z-index: 999999;
-            pointer-events: none; /* Empêche le chat de bloquer les clics sur le site */
-            image-rendering: pixelated; /* Garde l'aspect pixel art rétro propre */
+            pointer-events: none; /* Laisse passer les clics sur les boutons du dessous */
             display: block;
+        }
+
+        #neko-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
 
-    <div id="custom-neko">
-        <img id="neko-sprite" src="https://webneko.net/ico/ace.gif" alt="Ace" style="width:100%; height:100%;">
+    <div id="neko-container">
+        <iframe src="ace.html" scrolling="no"></iframe>
     </div>
 
     <div class="main-grid">
@@ -281,14 +287,14 @@
     </div>
 
     <script>
-        const neko = document.getElementById('custom-neko');
+        const nekoContainer = document.getElementById('neko-container');
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
         let nekoX = window.innerWidth / 2;
         let nekoY = window.innerHeight / 2;
         
-        // SPRINT ! Vitesse augmentée (passée de 0.05 à 0.12 pour être réactif sans saccader)
-        const speed = 0.12; 
+        // Configuration de la vitesse (0.15 = Ultra réactif et nerveux)
+        const speed = 0.15; 
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
@@ -296,14 +302,15 @@
         });
 
         function animateNeko() {
-            const distX = mouseX - nekoX - 16;
-            const distY = mouseY - nekoY - 16;
+            // Centre le container de 48px sur la pointe de la souris (48 / 2 = 24)
+            const distX = mouseX - nekoX - 24;
+            const distY = mouseY - nekoY - 24;
             
             nekoX += distX * speed;
             nekoY += distY * speed;
             
-            neko.style.left = nekoX + 'px';
-            neko.style.top = nekoY + 'px';
+            nekoContainer.style.left = nekoX + 'px';
+            nekoContainer.style.top = nekoY + 'px';
             
             requestAnimationFrame(animateNeko);
         }
@@ -311,6 +318,6 @@
         animateNeko();
     </script>
 
-    <script src="script.js?v=2.3"></script>
+    <script src="script.js?v=2.4"></script>
 </body>
 </html>
