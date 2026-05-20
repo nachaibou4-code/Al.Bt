@@ -14,7 +14,6 @@
             --line: #222;
             --accent: #00ff66; /* Vert Fallout */
             --dim-text: #666;
-            /* Image CD pour les archives */
             --cd-image: url('https://fluorescent-lights.neocities.org/Digital-CD-Disk-Vector-Transparent-PNG.png');
         }
 
@@ -42,7 +41,7 @@
             z-index: -1;
         }
 
-        /* ================= SCREEN DE SÉCURITÉ & LOADING (FALLOUT THEME) ================= */
+        /* ================= SCREEN DE SÉCURITÉ RE-SÉCURISÉ ================= */
         #loading-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -52,9 +51,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.5s ease;
         }
 
+        /* Lignes CRT de l'écran terminal */
         #loading-screen::before {
             content: " ";
             display: block;
@@ -159,9 +158,9 @@
             text-shadow: 0 0 4px rgba(255, 0, 0, 0.4);
         }
 
-        /* ================= STRUCTURE EN GRILLE DU SITE ================= */
+        /* ================= LE CHANGEMENT ICI : LE SITE EST CACHÉ AU DÉBUT ================= */
         .main-grid {
-            display: grid;
+            display: none; /* Caché au démarrage tant que l'accès est refusé */
             grid-template-columns: 300px 1fr;
             min-height: 100vh;
             box-sizing: border-box;
@@ -318,7 +317,7 @@
             pointer-events: none;
         }
 
-        /* ================= STYLE DU CD DE LA GRAPHISTE VALENTINE ================= */
+        /* ================= STYLE DU CD ================= */
         .profile-pic {
             position: relative;
             width: 183px;
@@ -329,19 +328,13 @@
             background: url('https://fluorescent-lights.neocities.org/f0rzNHe.png'), linear-gradient(150deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2), 40%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.6));
             background-size: contain, cover;
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
         }
         .profile-pic:before {
             content: "";
             background: var(--cd-image);
             position: absolute;
-            top: 5px;
-            left: -20px;
-            width: 150px;
-            height: 150px;
+            top: 5px; left: -20px; width: 150px; height: 150px;
             background-repeat: no-repeat;
             z-index: -1;
             animation-name: spin;
@@ -358,10 +351,7 @@
             to { transform:rotate(360deg); }
         }
         .profile-pic .pfp-fallback {
-            float: right;
-            width: 163px;
-            height: 160px;
-            border: none;
+            float: right; width: 163px; height: 160px; border: none;
         }
         .general-about .profile-pic img {
             max-width: inherit;
@@ -374,17 +364,17 @@
         <div class="terminal-gate" id="gate-content">
             <h2>ROBCO INDUSTRIES (TM)</h2>
             <p>> UNIFIED OPERATING SYSTEM v40.4</p>
-            <p>> CRITICAL SECURITY PROTOCOL ENABLED.</p>
-            <p>> ENTRER LES IDENTIFIANTS DE SÉCURITÉ DE L'ADMINISTRATEUR POUR DEVERROUILLER LES ARCHIVES_</p>
-            <p style="color: #888; font-size: 0.75rem; margin-top: 15px;">(INDICE : DATE DE NAISSANCE DE LA MEILLEURE PERSONNE SUR TERRE - FORMAT: JJMM)</p>
+            <p>> PROTOCOLE DE SECURITE CRITIQUE ACTIVE.</p>
+            <p>> VEUILLEZ SAISIR LE CODE DE L'ADMINISTRATEUR POUR DEVERROUILLER LES FICHIERS CONTENUS DANS LE SYSTEME_</p>
+            <p style="color: #666; font-size: 0.75rem; margin-top: 15px;">(INDICE : DATE DE NAISSANCE DE LA MEILLEURE PERSONNE SUR CETTE TERRE - FORMAT: JJMM)</p>
             
             <div class="input-area" id="gate-controls">
                 <span class="terminal-prompt">PASSWORD ></span>
-                <input type="password" id="birthdate-input" class="terminal-input" maxlength="4" placeholder="••••" autofocus>
+                <input type="text" id="birthdate-input" class="terminal-input" maxlength="4" placeholder="••••" autofocus style="-webkit-text-security: disc;">
                 <button onclick="checkAccess()" class="terminal-btn">ENTER</button>
             </div>
             
-            <div id="error-msg">> ACCÈS REFUSÉ. MOT DE PASSE INCORRECT. RÉESSAYEZ.</div>
+            <div id="error-msg">> ACCES REFUSE. REESSAYEZ.</div>
 
             <div class="loading-bar-container" id="loader-box">
                 <div class="loading-bar-progress" id="loader-bar"></div>
@@ -398,7 +388,7 @@
         <a href="https://webneko.net">Neko</a>
     </h1>
 
-    <div class="main-grid">
+    <div class="main-grid" id="site-main-content">
         <aside class="sidebar">
             <div style="font-weight: bold; font-size: 1.2rem; letter-spacing: 2px;">AL.BT_SYS</div>
             <nav>
@@ -445,7 +435,6 @@
                 <h1>ARCHIVES_</h1>
                 <div class="big-text-box">
                     <p>> [LOG_DATA_01]: Zone de texte pour tes souvenirs...</p>
-                    
                     <div class="profile-pic">
                         <img src="https://fluorescent-lights.neocities.org/f0rzNHe.png" class="pfp-fallback" alt="CD Cover">
                     </div>
@@ -471,40 +460,52 @@
 
     <script>
         function checkAccess() {
-            const input = document.getElementById('birthdate-input').value;
+            const input = document.getElementById('birthdate-input').value.trim();
             const errorMsg = document.getElementById('error-msg');
             const controls = document.getElementById('gate-controls');
             const loaderBox = document.getElementById('loader-box');
             const loaderBar = document.getElementById('loader-bar');
+            const siteContent = document.getElementById('site-main-content');
 
-            // Code configuré sur "1408" (Format JJMM)
-            if (input === "1408") { 
+            // Date fixée au 13 février -> "1302"
+            if (input === "1302") { 
                 errorMsg.style.display = "none";
-                controls.style.display = "none";
+                controls.style.display = "none"; // On bloque les boutons d'input
                 
+                // On prépare l'affichage de la jauge
                 loaderBox.style.display = "block";
                 let width = 0;
                 
                 const interval = setInterval(() => {
                     if (width >= 100) {
                         clearInterval(interval);
-                        document.getElementById('loading-screen').style.opacity = "0";
+                        
+                        // ÉTAPE CRUCIALE : On affiche le site d'un coup
+                        siteContent.style.display = "grid"; 
+                        
+                        // On efface doucement l'écran noir de chargement
+                        const screen = document.getElementById('loading-screen');
+                        screen.style.transition = "opacity 0.4s ease";
+                        screen.style.opacity = "0";
+                        
                         setTimeout(() => {
-                            document.getElementById('loading-screen').style.display = "none";
-                        }, 500);
+                            screen.style.display = "none";
+                        }, 400);
                     } else {
-                        width += 5; // Vitesse de chargement du système
+                        width += 4; // Vitesse du chargement de la jauge RobCo
                         loaderBar.style.width = width + "%";
                     }
-                }, 100);
+                }, 80);
 
             } else {
+                // Erreur si mauvaise date
                 errorMsg.style.display = "block";
                 document.getElementById('birthdate-input').value = "";
                 document.getElementById('birthdate-input').focus();
             }
         }
 
+        // Écoute de la touche Entrée
         document.getElementById('birthdate-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 checkAccess();
