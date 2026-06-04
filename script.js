@@ -16,9 +16,12 @@ navItems.forEach(item => {
             }
         });
 
-        // ACTION : Si l'utilisateur clique sur l'onglet Terminal, on lance l'animation de ta lettre !
-        // (Vérifie bien si l'ID de ta page ou le href de ton bouton s'appelle "04_TERMINAL" ou juste "terminal")
-        if (targetId === "04_TERMINAL" || targetId === "terminal") {
+        // Ce log va s'afficher dans ta console F12 à chaque clic !
+        console.log("Onglet cliqué : " + targetId);
+
+        // On vérifie toutes les versions possibles du nom pour être sûr de l'attraper !
+        if (targetId === "04_TERMINAL" || targetId === "terminal" || targetId.toLowerCase().includes("terminal")) {
+            console.log("-> Déclenchement de l'animation !");
             animerLettreTerminal();
         }
     });
