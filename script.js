@@ -15,6 +15,12 @@ navItems.forEach(item => {
                 page.classList.add('active');
             }
         });
+
+        // ACTION : Si l'utilisateur clique sur l'onglet Terminal, on lance l'animation de ta lettre !
+        // (Vérifie bien si l'ID de ta page ou le href de ton bouton s'appelle "04_TERMINAL" ou juste "terminal")
+        if (targetId === "04_TERMINAL" || targetId === "terminal") {
+            animerLettreTerminal();
+        }
     });
 });
 
@@ -203,3 +209,117 @@ buttonElement.addEventListener('click', () => {
     const selectedPhrase = lovePhrases[randomIndex];
     typeWriter(selectedPhrase);
 });
+
+// --- ANIMATION INTERACTIVE DU TERMINAL (LETTRE SECRÈTE) ---
+function animerLettreTerminal() {
+    // 1. On récupère le conteneur du terminal où s'affiche le texte
+    // Remplace '.terminal-content' par la vraie classe ou l'ID de ton bloc noir si besoin
+    const conteneur = document.querySelector('.terminal-content') || document.getElementById('terminal-text');
+    
+    if (!conteneur) return; // Sécurité si l'élément n'est pas encore chargé
+
+    // Ta lettre découpée par paragraphes pour l'effet d'affichage progressif
+    const paragraphesLettre = [
+        "If it’s meant to be,\nThen it will be,",
+        "Plus j’avance avec toi plus je remarque ce que j’ai accepté avant, l’amour que tu m’envoie et qui m’apaise très souvent montre que j’ai eu raison de me donner totalement à toi, autant dans l’âme et dans le cœur, que dans la pensée et la raison.",
+        "Tu me montres chaque jour et chaque seconde qu’à tes côtés la vie n'arrête pas vraiment d'être un orage que j’essaye de gérer mais que comparé a…toujours? tu essayes de prendre ce poids, tu es présent pas pour être redevable ou autre chose mais par amour je suppose ?",
+        "Je me disais souvent quand j’étais plus jeune jusqu’au début de ma vie adulte que ça allait être compliqué de m’aimer et que c’était un fardeau de le faire, pas parcque je ne suis pas aimable ou que je suis un monstre mais plutot dans le sens ou je n’arrivais pas vraiment a concevoir que quelqu’un ne me trouvait pas juste, bonne, belle, ou fun ( je deteste ce mot) sauf que tu as effacé cette pensée petit a petit et tu continue a le faire, tu m’as montré que ce n’était pas si dure d’aimer lorsque c’était la bonne personne, et franchement je suis passé par plusieurs étapes par rapport à cette phrase là, la “ bonne personne “, ça a commencé par les dessins animé et jeux lorsque j’étais plus jeune et plus rêveuse, puis la destruction de ce rêve d’enfant,un peu le prince charming effect alors que la plus part du temps c’est prince charming de shrek les gens, et Bam, la réalité de l’humain, de la luxure, de l’hypocrisie et j’ai totalement oublié et éffacé cette idée d’etre si proche, un partage si sacré qu’il en devient fragile, et ça, précisément c’est ce que j’ai retrouvé avec toi, un entrelacement d’ames.",
+        "Puis, je reste imparfaite, je reste incertaine, mais pas de toi, car si je le pouvais le monde serait déjà à tes pieds en ce moment, et pourtant je ne peux que l’écrire puisqu’en effet le dire paraîtra tellement irréel et infaisable, mais crois moi mon amour lorsque je dis que de ton âme la mienne est le reflet et que je chérie tellement cette relation dont j’ai rêvé depuis si longtemps.",
+        "Pour affirmer le je t’aime, le est ce que je t’aime ? Est-ce que j’aime? Rentre en jeu, c’est d’abord un langage, un eye contact dans un bar, une nuit sans plus, une discussion sur un autre amour, ce que j’aime, ce que tu aimes, oh Eternal Sunshine of the spotless, un partage? Le partage d’un même moment, de deux personne ayant vu la même oeuvre, le même art, et les deux même personne partageant le même ressenti, la même peine, dans des circonstances différentes, des personnes différentes, des moments différents, mais partagent aussi la même peine et la même peur, la peur d’une deuxieme fois, ou peut une troisième, ou une quatrième fois, de fusionner avec un autre être, puis du jour au lendemain, se retrouver seule, sur une moitié de bâtisse (;)) que l’on pensait quand même solide, mais qui avec la perte de l’autre, devient plus fragile et non abouti.",
+        "J’avoue, que je vais loin mais, je trouve qu’il y’a tellement de chose que je n’arrive pas tout le temps a te dire, car j’ai aussi peur, même si je te fais confiance, je t’aime, je te chérie et bien plus encore, seulement c’est important pour moi de rester fidele a moi même et d’en faire des tonnes et des tonnes, puisque je suppose que c’est de cette complexité et de ce yappage extrême que tu es tombé amoureux ? ou peut etre je me trompe, je ne pense pas et tu vas surement dire oui, mais tu as tes peurs et j’ai les miennes.",
+        "Et je suis si contente que tu m’ai laissé faire partie de ta vie que tu m’ai laissé mieux comprendre que tu m’ai laissé mieux apprendre que tu m’ai laissé le de la place et que tu as pris la tienne et que tu nous as laissé grandir et appartenir à une histoire d’amour qui me fais tellement de bien que je pleure là nsm la vie haha.",
+        "Je m’en veux de ne pas pouvoir heal tout ce que j’ai vécu de manière générale et même si tu vas sûrement dire que ce n’est pas de ma faute je veux quand même être le meilleur partenaire car c’est de ça dans tu as besoin et c’est ça que je veux t’offrir et je fais tout mon possible pour m’aimer et t’aimer toi et aimer tout ce que la vie nous offre ensemble mais aussi ce qu’elle me donne , car tu vaux tout et tu représente tellement pour moi que je trouves enfin de la douceur dans l’amour et de la tendresse et non du chaos et de l’irrespect et je sais que ça peut paraître futile et normal à tes yeux mais ça ne l’est tellement pas des miens, tu me montres que l’amour est simple et que je n’ai pas à supplier pour être perçu, je ne suis plus la petite Nes chez sa famille plus jeune, la Nes dans ses relations bancales car elle ne connait même pas sa valeur et le recherche mal ou ne connaît pas l’amour, mes parents m’ont donnés un coeur, et l’as fais battre . Et c’est trop fou comment la seule fois ou j’étais là en mode, allez on s’en fiche go arrêter de se mettre la pression, bah, t’es arrivé. C’est fou non ?",
+        "Je t’aime pour tellement de raison que j’écris ce message en plusieurs jours pour que toutes les émotion possible et imaginable que ce soit bonheur à la tristesse puisse transparaître dans ces mots et ces phrases ( j’ai l’impression que y’a bcp de tristesse mais je suis juste émue frr sensitive Bitch )",
+        "Puisque pour moi c’est aussi ça l’amour, c’est un film ou les deux ont peur de se perdre, ou une cassette qu’un vieux grand père regarde avec des moments de vie de sa femme, ou une image d’un photobooth tout con ou tu devais prendre des photos d’identités normalement mais tu te retrouves avec des souvenirs, bons ou mauvais, les souvenirs d’un personne qui fais si profondément partie de toi qu’elle devient ta moitié.",
+        "Et j’overthink beaucoup cet amour en pensant que je ne le mérite pas ou qu'à un moment tu vas disparaître ou bien tu ne seras simplement plus amoureux de moi, mais je m’accroche à ce que tu me montres et je pense sincèrement ne pas me tromper sur toi, puisque au delà de notre relation tu es une bonne personne, magnifique, douce et d’un sincérité que j’admire mais dont j’ai réellement peur, ( dit Siri joue Who Knows de daniel César )",
+        "Merci d'être patient avec moi, merci de m’aimer, merci de me faire rire, merci de me faire sourire, merci de partage mon quotidien, merci de me faire découvrir de nouvelles choses, la musique, tes voyages, des séries, des animes, des jeux,merci de me faire a manger quand j’ai faim ( big up a la pate a pizza la avec de la crème dedans miam miam), merci de m’appeller sur discord et en appel normal, merci d’avoir une sourire tout mimi et super shiny, merci d'être arrivé dans ma vie et merci de continuer à heal toutes ces petites parties de moi !!",
+        "J’ai hâte de fêter nos 1 an dans le même bar à châtelet, puis nos 4 ans, puis nos 10….\nJe t’aime mon coeur"
+    ];
+
+    // Vider le conteneur pour démarrer l'animation propre
+    conteneur.innerHTML = "";
+
+    // Lignes de démarrage système fixes
+    conteneur.innerHTML += `<div style="color: #666;">> ACCÈS TERMINAL SÉCURISÉ.</div>`;
+    conteneur.innerHTML += `<div style="color: #666;">> [DECRYPTING FILE]: CORE_MEMORY_LONG_LOG.txt</div>`;
+    
+    // Création de la ligne de commande "cat" simulée
+    const ligneCmd = document.createElement("div");
+    ligneCmd.style.color = "#fff";
+    ligneCmd.innerHTML = `USER@AL.BT_SYS:~$ `;
+    conteneur.appendChild(ligneCmd);
+
+    const commandeA_Ecrire = "cat love_letter_core.log";
+    let indexLettre = 0;
+
+    // Fonction "Typewriter" pour écrire la commande automatiquement
+    function taperCommande() {
+        if (indexLettre < commandeA_Ecrire.length) {
+            ligneCmd.innerHTML += commandeA_Ecrire.charAt(indexLettre);
+            indexLettre++;
+            setTimeout(taperCommande, 70); // Vitesse de frappe de la commande
+        } else {
+            // Une fois la commande tapée, on simule l'affichage de la lettre après un petit délai
+            setTimeout(afficherLaLettre, 600);
+        }
+    }
+
+    function afficherLaLettre() {
+        // En-tête style logs militaires/système
+        const entete = document.createElement("pre");
+        entete.style.color = "#00ff33";
+        entete.style.opacity = "0";
+        entete.style.transition = "opacity 1s ease";
+        entete.style.margin = "20px 0";
+        entete.textContent = `----------------------------------------------------------------------
+[ LOG_ID: #001_ANNIVERSARY ]
+[ SOURCE ]: IP_NESWORK
+[ TARGET ]: ALEXANDRE_BATISSE
+----------------------------------------------------------------------`;
+        conteneur.appendChild(entete);
+        setTimeout(() => entete.style.opacity = "0.4", 50);
+
+        // Affichage progressif paragraphe par paragraphe
+        let indexParagraphe = 0;
+
+        function afficherProchainParagraphe() {
+            if (indexParagraphe < paragraphesLettre.length) {
+                const p = document.createElement("p");
+                p.style.color = "#e0e0e0";
+                p.style.lineHeight = "1.6";
+                p.style.whiteSpace = "pre-wrap"; // Garde tes sauts de ligne magiques
+                p.style.marginBottom = "20px";
+                p.style.opacity = "0";
+                p.style.transition = "opacity 0.8s ease";
+                p.textContent = paragraphesLettre[indexParagraphe];
+                
+                conteneur.appendChild(p);
+                
+                // Petit hack pour forcer le navigateur à appliquer la transition
+                setTimeout(() => p.style.opacity = "1", 50);
+                
+                indexParagraphe++;
+                // Délai entre chaque paragraphe (plus rapide qu'un effet lettre par lettre pour pas lasser la lecture)
+                setTimeout(afficherProchainParagraphe, 1200);
+            } else {
+                // Pied de page système quand tout est fini
+                const finLog = document.createElement("pre");
+                finLog.style.color = "#00ff33";
+                finLog.style.opacity = "0";
+                finLog.style.transition = "opacity 1s ease";
+                finLog.style.marginTop = "30px";
+                finLog.textContent = `----------------------------------------------------------------------
+> [SYSTEM NOTE]: ( Siri, play 'Who Knows' by Daniel Caesar )
+> [STATUS]: TERMINAL IDLE. RE-READING RECOMMENDED.
+----------------------------------------------------------------------`;
+                conteneur.appendChild(finLog);
+                setTimeout(() => finLog.style.opacity = "0.4", 50);
+            }
+        }
+
+        setTimeout(afficherProchainParagraphe, 600);
+    }
+
+    // Lancement de la frappe automatique
+    setTimeout(taperCommande, 500);
+}
