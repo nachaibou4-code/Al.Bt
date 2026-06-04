@@ -1,6 +1,7 @@
 // --- 1. SCRIPT DE NAVIGATION ENTRE LES PAGES ---
 const navItems = document.querySelectorAll('.nav-item');
 const pages = document.querySelectorAll('.page-content');
+const conteneur = document.querySelector('.terminal-content') || document.getElementById('terminal-text');
 
 navItems.forEach(item => {
     item.addEventListener('click', (e) => {
@@ -334,3 +335,19 @@ function animerLettreTerminal() {
 
     setTimeout(taperCommande, 500);
 }
+// --- DÉCLENCHEUR INDÉPENDANT POUR LE TERMINAL ---
+document.addEventListener("DOMContentLoaded", () => {
+    // On cherche le bouton dans ton menu de gauche qui contient le texte "04_TERMINAL"
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    navItems.forEach(item => {
+        if (item.textContent.includes("04_TERMINAL")) {
+            item.addEventListener('click', () => {
+                // On laisse un mini délai de 100ms pour que la page s'affiche d'abord, puis on lance l'anim !
+                setTimeout(() => {
+                    animerLettreTerminal();
+                }, 100);
+            });
+        }
+    });
+});
