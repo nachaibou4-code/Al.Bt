@@ -210,13 +210,21 @@ buttonElement.addEventListener('click', () => {
     typeWriter(selectedPhrase);
 });
 
+// Variable globale pour éviter que l'animation ne se superpose si on clique plusieurs fois
+let isTerminalAnimating = false;
+
 // --- ANIMATION INTERACTIVE DU TERMINAL (LETTRE SECRÈTE) ---
 function animerLettreTerminal() {
+    // Si l'animation est déjà en cours, on ne fait rien pour éviter les doublons
+    if (isTerminalAnimating) return;
+
     // 1. On récupère le conteneur du terminal où s'affiche le texte
-    // Remplace '.terminal-content' par la vraie classe ou l'ID de ton bloc noir si besoin
     const conteneur = document.querySelector('.terminal-content') || document.getElementById('terminal-text');
     
     if (!conteneur) return; // Sécurité si l'élément n'est pas encore chargé
+
+    // On verrouille l'animation
+    isTerminalAnimating = true;
 
     // Ta lettre découpée par paragraphes pour l'effet d'affichage progressif
     const paragraphesLettre = [
@@ -257,9 +265,8 @@ function animerLettreTerminal() {
         if (indexLettre < commandeA_Ecrire.length) {
             ligneCmd.innerHTML += commandeA_Ecrire.charAt(indexLettre);
             indexLettre++;
-            setTimeout(taperCommande, 70); // Vitesse de frappe de la commande
+            setTimeout(taperCommande, 70); 
         } else {
-            // Une fois la commande tapée, on simule l'affichage de la lettre après un petit délai
             setTimeout(afficherLaLettre, 600);
         }
     }
@@ -271,6 +278,7 @@ function animerLettreTerminal() {
         entete.style.opacity = "0";
         entete.style.transition = "opacity 1s ease";
         entete.style.margin = "20px 0";
+        entete.style.fontFamily = "monospace";
         entete.textContent = `----------------------------------------------------------------------
 [ LOG_ID: #001_ANNIVERSARY ]
 [ SOURCE ]: IP_NESWORK
@@ -279,7 +287,6 @@ function animerLettreTerminal() {
         conteneur.appendChild(entete);
         setTimeout(() => entete.style.opacity = "0.4", 50);
 
-        // Affichage progressif paragraphe par paragraphe
         let indexParagraphe = 0;
 
         function afficherProchainParagraphe() {
@@ -287,7 +294,7 @@ function animerLettreTerminal() {
                 const p = document.createElement("p");
                 p.style.color = "#e0e0e0";
                 p.style.lineHeight = "1.6";
-                p.style.whiteSpace = "pre-wrap"; // Garde tes sauts de ligne magiques
+                p.style.whiteSpace = "pre-wrap"; 
                 p.style.marginBottom = "20px";
                 p.style.opacity = "0";
                 p.style.transition = "opacity 0.8s ease";
@@ -295,11 +302,9 @@ function animerLettreTerminal() {
                 
                 conteneur.appendChild(p);
                 
-                // Petit hack pour forcer le navigateur à appliquer la transition
                 setTimeout(() => p.style.opacity = "1", 50);
                 
                 indexParagraphe++;
-                // Délai entre chaque paragraphe (plus rapide qu'un effet lettre par lettre pour pas lasser la lecture)
                 setTimeout(afficherProchainParagraphe, 1200);
             } else {
                 // Pied de page système quand tout est fini
@@ -308,18 +313,21 @@ function animerLettreTerminal() {
                 finLog.style.opacity = "0";
                 finLog.style.transition = "opacity 1s ease";
                 finLog.style.marginTop = "30px";
+                finLog.style.fontFamily = "monospace";
                 finLog.textContent = `----------------------------------------------------------------------
 > [SYSTEM NOTE]: ( Siri, play 'Who Knows' by Daniel Caesar )
 > [STATUS]: TERMINAL IDLE. RE-READING RECOMMENDED.
 ----------------------------------------------------------------------`;
                 conteneur.appendChild(finLog);
                 setTimeout(() => finLog.style.opacity = "0.4", 50);
+
+                // Une fois que TOUT est totalement fini, on déverrouille pour le futur
+                isTerminalAnimating = false;
             }
         }
 
         setTimeout(afficherProchainParagraphe, 600);
     }
 
-    // Lancement de la frappe automatique
     setTimeout(taperCommande, 500);
 }
